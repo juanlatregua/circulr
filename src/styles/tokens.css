@@ -1,0 +1,15 @@
+:root {
+  --black:      #0A0A0A;
+  --smoke:      #1C1C1C;
+  --ash:        #2A2A2A;
+  --steel:      #3D3D3D;
+  --mid:        #666666;
+  --pale:       #AAAAAA;
+  --off-white:  #F5F5F0;
+  --lime:       #C8F060;
+  --lime-dim:   #9FC840;
+
+  --font-display: 'Syne', sans-serif;
+  --font-body:    'DM Sans', sans-serif;
+  --font-mono:    'DM Mono', monospace;
+}
