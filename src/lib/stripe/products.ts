@@ -1,4 +1,4 @@
-export const CIRQLR_PRODUCTS = {
+export const CIRCULR_PRODUCTS = {
   csrd_response: {
     name: "Respuesta CSRD",
     description: "Análisis de gaps y plan de acción para cumplimiento CSRD/ESRS",
@@ -45,4 +45,4 @@ export const CIRQLR_PRODUCTS = {
   },
 } as const;
 
-export type ProductKey = keyof typeof CIRQLR_PRODUCTS;
+export type ProductKey = keyof typeof CIRCULR_PRODUCTS;

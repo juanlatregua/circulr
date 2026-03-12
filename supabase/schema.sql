@@ -1,5 +1,5 @@
 -- ================================================
--- CIRQLR Database Schema
+-- CICULR Database Schema
 -- ================================================
 
 -- ENUM TYPES
@@ -111,8 +111,29 @@ CREATE TABLE invoices (
   paid_at           TIMESTAMPTZ
 );
 
+-- WEBHOOK EVENTS (idempotency)
+CREATE TABLE webhook_events (
+  id              TEXT PRIMARY KEY,  -- Stripe event ID
+  event_type      TEXT NOT NULL,
+  processed_at    TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- AUDIT LOG
+CREATE TABLE audit_log (
+  id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id     UUID REFERENCES profiles(id),
+  action      TEXT NOT NULL,
+  resource_type TEXT,
+  resource_id UUID,
+  old_value   TEXT,
+  new_value   TEXT,
+  created_at  TIMESTAMPTZ DEFAULT NOW()
+);
+
 -- RLS
 ALTER TABLE profiles ENABLE ROW LEVEL SECURITY;
+ALTER TABLE webhook_events ENABLE ROW LEVEL SECURITY;
+ALTER TABLE audit_log ENABLE ROW LEVEL SECURITY;
 ALTER TABLE projects ENABLE ROW LEVEL SECURITY;
 ALTER TABLE intakes ENABLE ROW LEVEL SECURITY;
 ALTER TABLE documents ENABLE ROW LEVEL SECURITY;
@@ -160,3 +181,157 @@ $$ LANGUAGE plpgsql;
 CREATE TRIGGER projects_updated_at
   BEFORE UPDATE ON projects
   FOR EACH ROW EXECUTE FUNCTION update_updated_at();
+
+-- TRIGGER: auto-create profile on auth.users INSERT
+CREATE OR REPLACE FUNCTION handle_new_user()
+RETURNS TRIGGER AS $$
+BEGIN
+  INSERT INTO public.profiles (id, full_name, company_name, role)
+  VALUES (
+    NEW.id,
+    COALESCE(NEW.raw_user_meta_data->>'full_name', ''),
+    COALESCE(NEW.raw_user_meta_data->>'company_name', ''),
+    'client'
+  );
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+
+CREATE TRIGGER on_auth_user_created
+  AFTER INSERT ON auth.users
+  FOR EACH ROW EXECUTE FUNCTION handle_new_user();
+
+-- EXTENDED RLS POLICIES
+
+-- Profiles: allow users to insert their own profile (fallback for trigger)
+CREATE POLICY "Users can insert own profile"
+  ON profiles FOR INSERT WITH CHECK (auth.uid() = id);
+
+-- Profiles: allow users to update own profile
+CREATE POLICY "Users can update own profile"
+  ON profiles FOR UPDATE USING (auth.uid() = id);
+
+-- Projects: clients can insert own projects
+CREATE POLICY "Clients can insert projects"
+  ON projects FOR INSERT WITH CHECK (auth.uid() = client_id);
+
+-- Projects: participants can update their projects
+CREATE POLICY "Participants can update projects"
+  ON projects FOR UPDATE USING (
+    auth.uid() = client_id OR auth.uid() = consultant_id
+  );
+
+-- Consultants can see all intakes for their projects
+CREATE POLICY "Consultants see project intakes"
+  ON intakes FOR SELECT USING (
+    auth.uid() IN (
+      SELECT consultant_id FROM projects WHERE id = project_id
+    )
+  );
+
+-- Clients can insert intakes
+CREATE POLICY "Clients can insert intakes"
+  ON intakes FOR INSERT WITH CHECK (auth.uid() = client_id);
+
+-- Clients can update their own intakes
+CREATE POLICY "Clients can update intakes"
+  ON intakes FOR UPDATE USING (auth.uid() = client_id);
+
+-- Documents: participants can insert
+CREATE POLICY "Participants can insert documents"
+  ON documents FOR INSERT WITH CHECK (
+    auth.uid() IN (
+      SELECT client_id FROM projects WHERE id = project_id
+      UNION
+      SELECT consultant_id FROM projects WHERE id = project_id
+    )
+  );
+
+-- AI generations: consultants can see their project generations
+CREATE POLICY "Consultants see project generations"
+  ON ai_generations FOR SELECT USING (
+    auth.uid() IN (
+      SELECT consultant_id FROM projects WHERE id = project_id
+    )
+  );
+
+-- AI generations: consultants can insert
+CREATE POLICY "Consultants can insert generations"
+  ON ai_generations FOR INSERT WITH CHECK (auth.uid() = consultant_id);
+
+-- AI generations: consultants can update their own
+CREATE POLICY "Consultants can update generations"
+  ON ai_generations FOR UPDATE USING (auth.uid() = consultant_id);
+
+-- Messages: participants can insert
+CREATE POLICY "Participants can insert messages"
+  ON messages FOR INSERT WITH CHECK (
+    auth.uid() = sender_id AND
+    auth.uid() IN (
+      SELECT client_id FROM projects WHERE id = project_id
+      UNION
+      SELECT consultant_id FROM projects WHERE id = project_id
+    )
+  );
+
+-- Messages: participants can update (mark as read)
+CREATE POLICY "Participants can update messages"
+  ON messages FOR UPDATE USING (
+    auth.uid() IN (
+      SELECT client_id FROM projects WHERE id = project_id
+      UNION
+      SELECT consultant_id FROM projects WHERE id = project_id
+    )
+  );
+
+-- Invoices: clients can see own invoices
+CREATE POLICY "Clients see own invoices"
+  ON invoices FOR SELECT USING (auth.uid() = client_id);
+
+-- Invoices: service role can insert (via webhook)
+CREATE POLICY "Service role can insert invoices"
+  ON invoices FOR INSERT WITH CHECK (true);
+
+-- ADMIN POLICIES
+-- Helper: check if current user is admin
+CREATE OR REPLACE FUNCTION is_admin()
+RETURNS BOOLEAN AS $$
+  SELECT EXISTS (
+    SELECT 1 FROM profiles WHERE id = auth.uid() AND role = 'admin'
+  );
+$$ LANGUAGE sql SECURITY DEFINER STABLE;
+
+-- Admins can read all profiles
+CREATE POLICY "Admins see all profiles"
+  ON profiles FOR SELECT USING (is_admin());
+
+-- Admins can update any profile (role changes)
+CREATE POLICY "Admins can update all profiles"
+  ON profiles FOR UPDATE USING (is_admin());
+
+-- Admins can read all projects
+CREATE POLICY "Admins see all projects"
+  ON projects FOR SELECT USING (is_admin());
+
+-- Admins can read all invoices
+CREATE POLICY "Admins see all invoices"
+  ON invoices FOR SELECT USING (is_admin());
+
+-- Admins can read all AI generations
+CREATE POLICY "Admins see all generations"
+  ON ai_generations FOR SELECT USING (is_admin());
+
+-- Admins can read all messages
+CREATE POLICY "Admins see all messages"
+  ON messages FOR SELECT USING (is_admin());
+
+-- Admins can read all documents
+CREATE POLICY "Admins see all documents"
+  ON documents FOR SELECT USING (is_admin());
+
+-- Admins can read all intakes
+CREATE POLICY "Admins see all intakes"
+  ON intakes FOR SELECT USING (is_admin());
+
+-- ENABLE REALTIME on messages
+ALTER PUBLICATION supabase_realtime ADD TABLE messages;

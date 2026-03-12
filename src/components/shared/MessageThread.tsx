@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Send } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { toast } from "sonner";
 import type { Message } from "@/types";
 import { formatRelativeTime } from "@/lib/utils/formatters";
 
@@ -23,6 +24,8 @@ export function MessageThread({ messages, currentUserId, onSend }: MessageThread
     try {
       await onSend(newMessage.trim());
       setNewMessage("");
+    } catch {
+      toast.error("Error al enviar mensaje");
     } finally {
       setSending(false);
     }

@@ -30,7 +30,7 @@ const stats = [
   { value: "11,000+", label: "Empresas afectadas por CSRD en España" },
   { value: "73%", label: "No saben por dónde empezar" },
   { value: "2025", label: "Año límite para primeros reportes" },
-  { value: "6-12 sem", label: "Tiempo medio de respuesta CIRQLR" },
+  { value: "6-12 sem", label: "Tiempo medio de respuesta CIRCULR" },
 ];
 
 const painPoints = [

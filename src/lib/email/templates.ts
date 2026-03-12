@@ -1,10 +1,10 @@
 export const EMAIL_TEMPLATES = {
   welcome: (name: string) => ({
-    subject: "Bienvenido a CIRQLR",
+    subject: "Bienvenido a CIRCULR",
     html: `
       <div style="font-family: 'DM Sans', sans-serif; max-width: 600px; margin: 0 auto;">
         <h1 style="color: #0A0A0A;">Hola ${name},</h1>
-        <p>Bienvenido a CIRQLR. Tu cuenta ha sido creada correctamente.</p>
+        <p>Bienvenido a CIRCULR. Tu cuenta ha sido creada correctamente.</p>
         <p>Estamos listos para ayudarte en tu transición hacia la economía circular.</p>
         <a href="${process.env.NEXT_PUBLIC_APP_URL}/dashboard"
            style="display: inline-block; background: #C8F060; color: #0A0A0A; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 500;">

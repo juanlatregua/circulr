@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { Project, ProjectStatus } from "@/types";
 import { StatusBadge } from "@/components/shared/StatusBadge";
 
@@ -26,16 +27,17 @@ export function ProjectKanban({ projects }: ProjectKanbanProps) {
             {projects
               .filter((p) => p.status === col.status)
               .map((project) => (
-                <div
+                <Link
                   key={project.id}
-                  className="rounded-lg border border-steel/20 bg-ash p-3"
+                  href={`/consultant/projects/${project.id}`}
+                  className="block rounded-lg border border-steel/20 bg-ash p-3 transition-colors hover:border-steel"
                 >
                   <h4 className="text-sm font-medium text-off-white">{project.title}</h4>
                   <p className="mt-1 text-xs text-mid line-clamp-2">{project.description}</p>
                   <div className="mt-2">
                     <StatusBadge status={project.status} />
                   </div>
-                </div>
+                </Link>
               ))}
           </div>
         </div>

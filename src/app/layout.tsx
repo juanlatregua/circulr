@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Syne, DM_Sans, DM_Mono } from "next/font/google";
+import { Toaster } from "@/components/ui/sonner";
+import { PostHogProvider } from "@/components/providers/PostHogProvider";
 import "./globals.css";
 
 const syne = Syne({
@@ -21,7 +23,7 @@ const dmMono = DM_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "CIRQLR — Circular Economy Consulting Platform",
+  title: "CIRCULR — Circular Economy Consulting Platform",
   description:
     "B2B SaaS platform connecting businesses with circular economy consultants. CSRD compliance, CE diagnostics, and implementation support.",
 };
@@ -36,7 +38,20 @@ export default function RootLayout({
       <body
         className={`${syne.variable} ${dmSans.variable} ${dmMono.variable} font-body antialiased bg-black text-off-white`}
       >
+        <PostHogProvider>
         {children}
+        <Toaster
+          theme="dark"
+          position="bottom-right"
+          toastOptions={{
+            style: {
+              background: "#1C1C1C",
+              border: "1px solid rgba(61, 61, 61, 0.3)",
+              color: "#F5F5F0",
+            },
+          }}
+        />
+        </PostHogProvider>
       </body>
     </html>
   );

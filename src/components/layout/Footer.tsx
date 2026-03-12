@@ -6,7 +6,7 @@ export function Footer() {
       <div className="mx-auto max-w-7xl px-6 py-12">
         <div className="grid gap-8 md:grid-cols-4">
           <div>
-            <h3 className="font-display text-lg font-800 text-off-white">CIRQLR</h3>
+            <h3 className="font-display text-lg font-800 text-off-white">CIRCULR</h3>
             <p className="mt-2 text-sm text-pale">
               Consultoría de economía circular para empresas europeas.
             </p>
@@ -34,7 +34,7 @@ export function Footer() {
           <div>
             <h4 className="text-sm font-medium text-off-white">Contacto</h4>
             <ul className="mt-3 space-y-2">
-              <li><span className="text-sm text-pale">hola@cirqlr.com</span></li>
+              <li><span className="text-sm text-pale">info@circulr.es</span></li>
               <li><span className="text-sm text-pale">Barcelona, España</span></li>
             </ul>
           </div>
@@ -42,7 +42,7 @@ export function Footer() {
 
         <div className="mt-12 border-t border-steel/30 pt-6">
           <p className="text-center text-xs text-mid">
-            &copy; {new Date().getFullYear()} CIRQLR. Todos los derechos reservados.
+            &copy; {new Date().getFullYear()} CIRCULR. Todos los derechos reservados.
           </p>
         </div>
       </div>

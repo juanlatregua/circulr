@@ -1,4 +1,4 @@
-# CIRQLR
+# CIRCULR
 
 B2B SaaS platform for circular economy consulting. Connects European businesses with CE experts, powered by AI-assisted deliverable generation.
 
@@ -26,8 +26,8 @@ B2B SaaS platform for circular economy consulting. Connects European businesses 
 
 1. **Clone and install**:
    ```bash
-   git clone https://github.com/juanlatregua/cirqlr.git
-   cd cirqlr
+   git clone https://github.com/juanlatregua/ciculr.git
+   cd ciculr
    npm install
    ```
 

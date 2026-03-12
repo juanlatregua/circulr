@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback } from "react";
+import { trackEvent } from "@/components/providers/PostHogProvider";
 
 interface UseAIStreamReturn {
   content: string;
@@ -43,6 +44,8 @@ export function useAIStream(): UseAIStreamReturn {
         const chunk = decoder.decode(value, { stream: true });
         setContent((prev) => prev + chunk);
       }
+
+      trackEvent.aiGeneration(projectId, 0, "stream");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Error in AI generation");
     } finally {

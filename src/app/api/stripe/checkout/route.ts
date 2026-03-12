@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { stripe } from "@/lib/stripe/client";
-import { CIRQLR_PRODUCTS, type ProductKey } from "@/lib/stripe/products";
+import { CIRCULR_PRODUCTS, type ProductKey } from "@/lib/stripe/products";
 
 export async function POST(request: NextRequest) {
   try {
@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
       productKey: ProductKey;
     };
 
-    const product = CIRQLR_PRODUCTS[productKey];
+    const product = CIRCULR_PRODUCTS[productKey];
     if (!product) {
       return NextResponse.json({ error: "Invalid product" }, { status: 400 });
     }

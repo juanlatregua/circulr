@@ -1,12 +1,80 @@
-import { FolderOpen, MessageSquare, Clock, TrendingUp } from "lucide-react";
+"use client";
+
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { FolderOpen, MessageSquare, Clock, TrendingUp, ArrowRight } from "lucide-react";
+import { createClient } from "@/lib/supabase/client";
+import { useUser } from "@/hooks/useUser";
+import { StatusBadge } from "@/components/shared/StatusBadge";
+import type { Project } from "@/types";
+import { formatRelativeTime } from "@/lib/utils/formatters";
 
 export default function DashboardPage() {
+  const { user, profile } = useUser();
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [unreadCount, setUnreadCount] = useState(0);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!user) return;
+
+    const supabase = createClient();
+
+    async function fetchData() {
+      const [projectsRes, messagesRes] = await Promise.all([
+        supabase
+          .from("projects")
+          .select("*")
+          .eq("client_id", user!.id)
+          .order("created_at", { ascending: false }),
+        supabase
+          .from("messages")
+          .select("id, project_id, sender_id, read_at")
+          .is("read_at", null)
+          .neq("sender_id", user!.id),
+      ]);
+
+      setProjects(projectsRes.data || []);
+      setUnreadCount(messagesRes.data?.length || 0);
+      setLoading(false);
+    }
+
+    fetchData();
+  }, [user]);
+
+  const activeProjects = projects.filter((p) =>
+    ["active", "in_review"].includes(p.status)
+  );
+
+  const nextDeadline = projects
+    .filter((p) => p.deadline && ["active", "in_review"].includes(p.status))
+    .sort((a, b) => (a.deadline! > b.deadline! ? 1 : -1))[0]?.deadline;
+
   const stats = [
-    { label: "Proyectos activos", value: "0", icon: FolderOpen },
-    { label: "Mensajes sin leer", value: "0", icon: MessageSquare },
-    { label: "Próximo deadline", value: "—", icon: Clock },
-    { label: "Progreso medio", value: "—", icon: TrendingUp },
+    { label: "Proyectos activos", value: String(activeProjects.length), icon: FolderOpen },
+    { label: "Mensajes sin leer", value: String(unreadCount), icon: MessageSquare },
+    { label: "Próximo deadline", value: nextDeadline ? new Date(nextDeadline).toLocaleDateString("es-ES", { day: "numeric", month: "short" }) : "—", icon: Clock },
+    { label: "Total proyectos", value: String(projects.length), icon: TrendingUp },
   ];
+
+  if (!profile?.onboarded && !loading) {
+    return (
+      <div className="flex flex-col items-center justify-center py-20">
+        <h1 className="font-display text-2xl font-800 text-off-white">
+          Bienvenido a CIRCULR
+        </h1>
+        <p className="mt-2 text-sm text-pale">
+          Completa tu perfil para empezar.
+        </p>
+        <Link
+          href="/dashboard/onboarding"
+          className="mt-6 rounded-lg bg-lime px-6 py-2.5 text-sm font-medium text-black hover:bg-lime-dim"
+        >
+          Completar onboarding
+        </Link>
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -14,7 +82,7 @@ export default function DashboardPage() {
         Dashboard
       </h1>
       <p className="mt-1 text-sm text-pale">
-        Bienvenido a CIRQLR. Aquí puedes gestionar tus proyectos de economía circular.
+        {profile?.company_name ? `${profile.company_name} — ` : ""}Gestiona tus proyectos de economía circular.
       </p>
 
       <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -28,20 +96,57 @@ export default function DashboardPage() {
               <span className="text-sm text-pale">{stat.label}</span>
             </div>
             <p className="mt-3 font-display text-2xl font-700 text-off-white">
-              {stat.value}
+              {loading ? "…" : stat.value}
             </p>
           </div>
         ))}
       </div>
 
-      <div className="mt-8 rounded-xl border border-steel/30 bg-smoke p-6">
-        <h2 className="font-display text-lg font-700 text-off-white">
-          Primeros pasos
-        </h2>
-        <p className="mt-2 text-sm text-pale">
-          Completa tu perfil y solicita tu primer diagnóstico de economía circular.
-        </p>
-      </div>
+      {/* Recent projects */}
+      {projects.length > 0 && (
+        <div className="mt-8">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="font-display text-lg font-700 text-off-white">
+              Proyectos recientes
+            </h2>
+            <Link href="/dashboard/projects" className="flex items-center gap-1 text-sm text-lime hover:underline">
+              Ver todos <ArrowRight size={14} />
+            </Link>
+          </div>
+          <div className="space-y-3">
+            {projects.slice(0, 3).map((project) => (
+              <Link
+                key={project.id}
+                href={`/dashboard/projects/${project.id}`}
+                className="flex items-center justify-between rounded-xl border border-steel/30 bg-smoke p-4 transition-colors hover:border-steel"
+              >
+                <div>
+                  <h3 className="text-sm font-medium text-off-white">{project.title}</h3>
+                  <p className="mt-0.5 text-xs text-mid">{formatRelativeTime(project.created_at)}</p>
+                </div>
+                <StatusBadge status={project.status} />
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {projects.length === 0 && !loading && profile?.onboarded && (
+        <div className="mt-8 rounded-xl border border-steel/30 bg-smoke p-6 text-center">
+          <h2 className="font-display text-lg font-700 text-off-white">
+            No tienes proyectos todavía
+          </h2>
+          <p className="mt-2 text-sm text-pale">
+            Solicita tu primer diagnóstico de economía circular.
+          </p>
+          <Link
+            href="/dashboard/onboarding"
+            className="mt-4 inline-block rounded-lg bg-lime px-6 py-2 text-sm font-medium text-black hover:bg-lime-dim"
+          >
+            Nuevo proyecto
+          </Link>
+        </div>
+      )}
     </div>
   );
 }

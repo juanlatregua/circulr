@@ -2,6 +2,7 @@
 
 import { useState, useRef } from "react";
 import { Upload, File, X } from "lucide-react";
+import { toast } from "sonner";
 
 interface DocumentUploadProps {
   projectId: string;
@@ -31,8 +32,10 @@ export function DocumentUpload({ projectId, onUploadComplete }: DocumentUploadPr
 
       const { path } = await response.json();
       onUploadComplete?.(path);
+      toast.success("Documento subido");
     } catch (error) {
       console.error("Upload error:", error);
+      toast.error("Error al subir documento");
       setFileName(null);
     } finally {
       setUploading(false);

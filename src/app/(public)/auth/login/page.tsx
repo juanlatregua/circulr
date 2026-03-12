@@ -16,7 +16,7 @@ export default function LoginPage() {
     setError(null);
 
     const supabase = createClient();
-    const { error: authError } = await supabase.auth.signInWithPassword({
+    const { data, error: authError } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
@@ -27,7 +27,20 @@ export default function LoginPage() {
       return;
     }
 
-    window.location.href = "/dashboard";
+    // Check profile for role + onboarded status
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select("role, onboarded")
+      .eq("id", data.user.id)
+      .single();
+
+    if (profile?.role === "consultant" || profile?.role === "admin") {
+      window.location.href = "/consultant";
+    } else if (profile?.onboarded) {
+      window.location.href = "/dashboard";
+    } else {
+      window.location.href = "/dashboard/onboarding";
+    }
   }
 
   return (
@@ -37,7 +50,7 @@ export default function LoginPage() {
           Iniciar sesión
         </h1>
         <p className="mt-2 text-sm text-pale">
-          Accede a tu cuenta CIRQLR
+          Accede a tu cuenta CIRCULR
         </p>
 
         <form onSubmit={handleLogin} className="mt-8 space-y-4">

@@ -59,14 +59,28 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
-  // Get user profile for role check
+  // Get user profile for role + onboarding check
   const { data: profile } = await supabase
     .from("profiles")
-    .select("role")
+    .select("role, onboarded")
     .eq("id", user.id)
     .single();
 
   const role = profile?.role ?? "client";
+  const onboarded = profile?.onboarded ?? false;
+
+  // Onboarding guard: redirect un-onboarded clients to onboarding
+  // (but allow them to access the onboarding page itself)
+  if (
+    role === "client" &&
+    !onboarded &&
+    pathname.startsWith("/dashboard") &&
+    !pathname.startsWith("/dashboard/onboarding")
+  ) {
+    const url = request.nextUrl.clone();
+    url.pathname = "/dashboard/onboarding";
+    return NextResponse.redirect(url);
+  }
 
   // Route protection by role
   if (pathname.startsWith("/dashboard") && role !== "client" && role !== "admin") {

@@ -47,7 +47,7 @@
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
 
-  /* CIRQLR color tokens */
+  /* CIRCULR color tokens */
   --color-black: var(--black);
   --color-smoke: var(--smoke);
   --color-ash: var(--ash);
@@ -58,7 +58,7 @@
   --color-lime: var(--lime);
   --color-lime-dim: var(--lime-dim);
 
-  /* CIRQLR font tokens */
+  /* CIRCULR font tokens */
   --font-display: var(--font-display);
   --font-body: var(--font-body);
   --font-mono-custom: var(--font-mono);
