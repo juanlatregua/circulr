@@ -1,24 +1,48 @@
-// TODO: migrate to Microsoft Graph API for better reliability and OAuth2 auth
-import nodemailer from "nodemailer";
+// lib/email/send.ts — Send emails via Microsoft Graph API (Azure AD)
+// Uses client_credentials OAuth2 flow.
+// Requires Azure AD app with Mail.Send application permission.
 
-let _transporter: nodemailer.Transporter | null = null;
+let cachedToken: { token: string; expiresAt: number } | null = null;
 
-function getTransporter(): nodemailer.Transporter {
-  if (!_transporter) {
-    _transporter = nodemailer.createTransport({
-      host: "smtp.office365.com",
-      port: 587,
-      secure: false, // STARTTLS
-      auth: {
-        user: "info@circulr.es",
-        pass: process.env.OUTLOOK_PASSWORD,
-      },
-    });
+async function getAccessToken(): Promise<string> {
+  if (cachedToken && Date.now() < cachedToken.expiresAt - 60_000) {
+    return cachedToken.token;
   }
-  return _transporter;
-}
 
-const FROM_EMAIL = "CIRCULR <info@circulr.es>";
+  const tenantId = process.env.AZURE_TENANT_ID;
+  const clientId = process.env.AZURE_CLIENT_ID;
+  const clientSecret = process.env.AZURE_CLIENT_SECRET;
+
+  if (!tenantId || !clientId || !clientSecret) {
+    throw new Error("Missing AZURE_TENANT_ID, AZURE_CLIENT_ID, or AZURE_CLIENT_SECRET");
+  }
+
+  const res = await fetch(
+    `https://login.microsoftonline.com/${tenantId}/oauth2/v2.0/token`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({
+        client_id: clientId,
+        client_secret: clientSecret,
+        scope: "https://graph.microsoft.com/.default",
+        grant_type: "client_credentials",
+      }),
+    },
+  );
+
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(`Azure token error ${res.status}: ${text}`);
+  }
+
+  const data = await res.json();
+  cachedToken = {
+    token: data.access_token,
+    expiresAt: Date.now() + data.expires_in * 1000,
+  };
+  return cachedToken.token;
+}
 
 interface SendEmailOptions {
   to: string;
@@ -27,20 +51,45 @@ interface SendEmailOptions {
 }
 
 export async function sendEmail({ to, subject, html }: SendEmailOptions) {
-  if (!process.env.OUTLOOK_PASSWORD) {
-    console.warn("OUTLOOK_PASSWORD not set, skipping email:", subject);
+  const from = process.env.EMAIL_FROM || "info@circulr.es";
+
+  if (!process.env.AZURE_TENANT_ID) {
+    console.warn("AZURE_TENANT_ID not set, skipping email:", subject);
     return null;
   }
 
   try {
-    const info = await getTransporter().sendMail({
-      from: FROM_EMAIL,
-      to,
-      subject,
-      html,
-    });
+    const token = await getAccessToken();
 
-    return { id: info.messageId };
+    const res = await fetch(
+      `https://graph.microsoft.com/v1.0/users/${encodeURIComponent(from)}/sendMail`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          message: {
+            subject,
+            body: {
+              contentType: "HTML",
+              content: html,
+            },
+            toRecipients: [{ emailAddress: { address: to } }],
+          },
+          saveToSentItems: false,
+        }),
+      },
+    );
+
+    if (!res.ok) {
+      const errorBody = await res.text();
+      console.error(`Graph sendMail error ${res.status}:`, errorBody);
+      return null;
+    }
+
+    return { id: `graph-${Date.now()}` };
   } catch (error) {
     console.error("Email send failed:", error);
     return null;
