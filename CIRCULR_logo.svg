@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 130" width="600" height="130">
+  <defs>
+    <linearGradient id="arcG" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FD6925"/>
+      <stop offset="45%" style="stop-color:#FCC30B"/>
+      <stop offset="100%" style="stop-color:#3F7E44"/>
+    </linearGradient>
+    <linearGradient id="rG" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#26BDE2"/>
+      <stop offset="100%" style="stop-color:#3F7E44"/>
+    </linearGradient>
+    <linearGradient id="textG" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#2D6A4F"/>
+      <stop offset="100%" style="stop-color:#1A5276"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Arc circle — ODS gradient warm to green -->
+  <circle cx="65" cy="65" r="46"
+    fill="none"
+    stroke="url(#arcG)"
+    stroke-width="10"
+    stroke-dasharray="252 37"
+    stroke-linecap="round"
+    transform="rotate(-115 65 65)" />
+
+  <!-- Arrow at arc end -->
+  <polygon points="65,19 58,33 72,33" fill="#3F7E44"
+    transform="rotate(190 65 65)" />
+
+  <!-- Start dot — warm orange -->
+  <circle cx="65" cy="19" r="6" fill="#FD6925"
+    transform="rotate(-115 65 65)" />
+
+  <!-- R inside circle — gradient blue to green -->
+  <text x="65" y="82"
+    font-family="'Arial Black', Arial, sans-serif"
+    font-size="54" font-weight="900"
+    fill="url(#rG)"
+    text-anchor="middle">R</text>
+
+  <!-- Wordmark CIRCULR — deep teal/forest gradient -->
+  <text x="138" y="74"
+    font-family="'Arial Black', Arial, sans-serif"
+    font-size="46" font-weight="900"
+    fill="url(#textG)"
+    letter-spacing="-1">CIRCULR</text>
+
+  <!-- Tagline -->
+  <text x="138" y="97"
+    font-family="Arial, sans-serif"
+    font-size="12.5" font-weight="400"
+    fill="#52796F"
+    letter-spacing="3.5">CLOSE THE LOOP · OPEN THE REVENUE</text>
+</svg>

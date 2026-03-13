@@ -1,5 +1,5 @@
 -- ================================================
--- CICULR Seed Data
+-- CIRCULR Seed Data
 -- ================================================
 -- Run after schema.sql in your Supabase project.
 --
@@ -26,7 +26,7 @@
 -- UPDATE profiles SET
 --   role = 'consultant',
 --   full_name = 'Carlos Rodríguez',
---   company_name = 'CICULR',
+--   company_name = 'CIRCULR',
 --   sector = 'Consultoría',
 --   onboarded = true
 -- WHERE id = '<CONSULTANT_USER_UUID>';

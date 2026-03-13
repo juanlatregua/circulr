@@ -26,8 +26,8 @@ B2B SaaS platform for circular economy consulting. Connects European businesses 
 
 1. **Clone and install**:
    ```bash
-   git clone https://github.com/juanlatregua/ciculr.git
-   cd ciculr
+   git clone https://github.com/juanlatregua/circulr.git
+   cd circulr
    npm install
    ```
 

@@ -65,7 +65,7 @@ export async function POST(request: NextRequest) {
     return new Response(readable, {
       headers: {
         "Content-Type": "application/pdf",
-        "Content-Disposition": `attachment; filename="ciculr-${projectId.slice(0, 8)}.pdf"`,
+        "Content-Disposition": `attachment; filename="circulr-${projectId.slice(0, 8)}.pdf"`,
       },
     });
   } catch (error) {
