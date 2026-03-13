@@ -70,10 +70,10 @@ export default function AdminUsersPage() {
 
   return (
     <div>
-      <h1 className="font-display text-2xl font-800 text-off-white">
+      <h1 className="font-display text-2xl font-800 text-forest">
         Usuarios
       </h1>
-      <p className="mt-1 text-sm text-pale">
+      <p className="mt-1 text-sm text-mid">
         Gestiona los usuarios de la plataforma.
       </p>
 
@@ -81,31 +81,31 @@ export default function AdminUsersPage() {
       <div className="mt-6 relative max-w-sm">
         <Search
           size={16}
-          className="absolute left-3 top-1/2 -translate-y-1/2 text-mid"
+          className="absolute left-3 top-1/2 -translate-y-1/2 text-stone"
         />
         <input
           type="text"
           placeholder="Buscar por nombre, empresa o rol..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full rounded-lg border border-steel/30 bg-smoke py-2 pl-9 pr-3 text-sm text-off-white placeholder:text-mid focus:border-lime focus:outline-none"
+          className="w-full rounded-lg border border-sand bg-white py-2 pl-9 pr-3 text-sm text-forest placeholder:text-stone focus:border-teal focus:outline-none"
         />
       </div>
 
       {/* Stats */}
       <div className="mt-6 flex gap-4">
-        <span className="text-sm text-pale">
-          Total: <strong className="text-off-white">{profiles.length}</strong>
+        <span className="text-sm text-mid">
+          Total: <strong className="text-forest">{profiles.length}</strong>
         </span>
-        <span className="text-sm text-pale">
+        <span className="text-sm text-mid">
           Clientes:{" "}
-          <strong className="text-off-white">
+          <strong className="text-forest">
             {profiles.filter((p) => p.role === "client").length}
           </strong>
         </span>
-        <span className="text-sm text-pale">
+        <span className="text-sm text-mid">
           Consultores:{" "}
-          <strong className="text-off-white">
+          <strong className="text-forest">
             {profiles.filter((p) => p.role === "consultant").length}
           </strong>
         </span>
@@ -115,13 +115,13 @@ export default function AdminUsersPage() {
       {loading ? (
         <div className="mt-6 space-y-3">
           {[1, 2, 3].map((i) => (
-            <div key={i} className="h-14 animate-pulse rounded-xl bg-smoke" />
+            <div key={i} className="h-14 animate-pulse rounded-xl bg-white" />
           ))}
         </div>
       ) : filtered.length === 0 ? (
-        <div className="mt-8 flex flex-col items-center justify-center rounded-xl border border-steel/30 bg-smoke p-12">
-          <Users size={40} className="text-steel" />
-          <p className="mt-4 text-sm text-mid">
+        <div className="mt-8 flex flex-col items-center justify-center rounded-xl border border-sand bg-white p-12">
+          <Users size={40} className="text-sand" />
+          <p className="mt-4 text-sm text-stone">
             {search ? "Sin resultados." : "No hay usuarios."}
           </p>
         </div>
@@ -129,7 +129,7 @@ export default function AdminUsersPage() {
         <div className="mt-6 overflow-x-auto">
           <table className="w-full text-left text-sm">
             <thead>
-              <tr className="border-b border-steel/30 text-xs uppercase text-mid">
+              <tr className="border-b border-sand text-xs uppercase text-stone">
                 <th className="pb-3 pr-4 font-medium">Nombre</th>
                 <th className="pb-3 pr-4 font-medium">Empresa</th>
                 <th className="pb-3 pr-4 font-medium">Sector</th>
@@ -138,21 +138,21 @@ export default function AdminUsersPage() {
                 <th className="pb-3 font-medium">Acciones</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-steel/20">
+            <tbody className="divide-y divide-sand">
               {filtered.map((p) => {
                 const config = roleConfig[p.role] || roleConfig.client;
 
                 return (
-                  <tr key={p.id} className="text-off-white">
+                  <tr key={p.id} className="text-forest">
                     <td className="py-3 pr-4">
                       <span className="font-medium">
                         {p.full_name || "—"}
                       </span>
                     </td>
-                    <td className="py-3 pr-4 text-pale">
+                    <td className="py-3 pr-4 text-mid">
                       {p.company_name || "—"}
                     </td>
-                    <td className="py-3 pr-4 text-pale">
+                    <td className="py-3 pr-4 text-mid">
                       {p.sector || "—"}
                     </td>
                     <td className="py-3 pr-4">
@@ -160,18 +160,18 @@ export default function AdminUsersPage() {
                         {config.label}
                       </Badge>
                     </td>
-                    <td className="py-3 pr-4 text-pale">
+                    <td className="py-3 pr-4 text-mid">
                       {formatDate(p.created_at)}
                     </td>
                     <td className="py-3">
                       {p.id === user?.id ? (
-                        <span className="text-xs text-mid">T&uacute;</span>
+                        <span className="text-xs text-stone">T&uacute;</span>
                       ) : (
                         <div className="relative">
                           {updating === p.id && (
                             <Loader2
                               size={14}
-                              className="absolute -left-5 top-1/2 -translate-y-1/2 animate-spin text-lime"
+                              className="absolute -left-5 top-1/2 -translate-y-1/2 animate-spin text-teal"
                             />
                           )}
                           <select
@@ -180,7 +180,7 @@ export default function AdminUsersPage() {
                               handleRoleChange(p.id, e.target.value)
                             }
                             disabled={updating === p.id}
-                            className="rounded border border-steel/30 bg-smoke px-2 py-1 text-xs text-off-white focus:border-lime focus:outline-none disabled:opacity-50"
+                            className="rounded border border-sand bg-white px-2 py-1 text-xs text-forest focus:border-teal focus:outline-none disabled:opacity-50"
                           >
                             <option value="client">Cliente</option>
                             <option value="consultant">Consultor</option>

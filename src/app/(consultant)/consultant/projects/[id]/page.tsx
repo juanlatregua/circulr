@@ -84,8 +84,8 @@ export default function ConsultantProjectPage({ params }: ConsultantProjectPageP
   if (loading) {
     return (
       <div className="space-y-4">
-        <div className="h-8 w-48 animate-pulse rounded bg-smoke" />
-        <div className="h-64 animate-pulse rounded-xl bg-smoke" />
+        <div className="h-8 w-48 animate-pulse rounded bg-white" />
+        <div className="h-64 animate-pulse rounded-xl bg-white" />
       </div>
     );
   }
@@ -93,8 +93,8 @@ export default function ConsultantProjectPage({ params }: ConsultantProjectPageP
   if (!project) {
     return (
       <div className="text-center py-20">
-        <p className="text-mid">Proyecto no encontrado.</p>
-        <Link href="/consultant/projects" className="mt-4 inline-block text-lime hover:underline">
+        <p className="text-stone">Proyecto no encontrado.</p>
+        <Link href="/consultant/projects" className="mt-4 inline-block text-teal hover:underline">
           Volver a proyectos
         </Link>
       </div>
@@ -117,17 +117,17 @@ export default function ConsultantProjectPage({ params }: ConsultantProjectPageP
     <div>
       <Link
         href="/consultant/projects"
-        className="mb-4 inline-flex items-center gap-1 text-sm text-pale hover:text-off-white"
+        className="mb-4 inline-flex items-center gap-1 text-sm text-mid hover:text-forest"
       >
         <ArrowLeft size={14} /> Volver a proyectos
       </Link>
 
       <div className="flex items-start justify-between">
         <div>
-          <h1 className="font-display text-2xl font-800 text-off-white">
+          <h1 className="font-display text-2xl font-800 text-forest">
             {project.title}
           </h1>
-          <p className="mt-1 text-sm text-pale">{project.description}</p>
+          <p className="mt-1 text-sm text-mid">{project.description}</p>
         </div>
         <div className="flex items-center gap-3">
           <StatusBadge status={project.status} />
@@ -135,7 +135,7 @@ export default function ConsultantProjectPage({ params }: ConsultantProjectPageP
             <button
               onClick={() => handleStatusChange(action.next)}
               disabled={statusLoading}
-              className="flex items-center gap-2 rounded-lg bg-lime px-3 py-1.5 text-sm font-medium text-black hover:bg-lime-dim disabled:opacity-50"
+              className="flex items-center gap-2 rounded-full gradient-primary px-3 py-1.5 text-sm font-medium text-white hover:opacity-90 disabled:opacity-50"
             >
               {statusLoading && <Loader2 size={14} className="animate-spin" />}
               {action.label}
@@ -147,7 +147,7 @@ export default function ConsultantProjectPage({ params }: ConsultantProjectPageP
       <div className="mt-8 grid gap-6 lg:grid-cols-3">
         <div className="lg:col-span-2">
           <Tabs defaultValue="intake" className="w-full">
-            <TabsList className="bg-smoke border border-steel/30">
+            <TabsList className="bg-white border border-sand">
               <TabsTrigger value="intake">Intake</TabsTrigger>
               <TabsTrigger value="ai">IA Generator</TabsTrigger>
               <TabsTrigger value="editor">Editor</TabsTrigger>
@@ -158,8 +158,8 @@ export default function ConsultantProjectPage({ params }: ConsultantProjectPageP
               {intake ? (
                 <IntakeView intake={intake} />
               ) : (
-                <div className="rounded-xl border border-steel/30 bg-smoke p-6">
-                  <p className="text-sm text-mid">
+                <div className="rounded-xl border border-sand bg-white p-6">
+                  <p className="text-sm text-stone">
                     El cliente no ha completado el cuestionario todavía.
                   </p>
                 </div>
@@ -170,20 +170,20 @@ export default function ConsultantProjectPage({ params }: ConsultantProjectPageP
               <AIGenerator projectId={id} context={intakeContext} />
 
               {generations.length > 0 && (
-                <div className="mt-4 rounded-xl border border-steel/30 bg-smoke p-6">
-                  <h3 className="text-sm font-medium text-off-white mb-3">
+                <div className="mt-4 rounded-xl border border-sand bg-white p-6">
+                  <h3 className="text-sm font-medium text-forest mb-3">
                     Generaciones anteriores ({generations.length})
                   </h3>
                   <div className="space-y-2">
                     {generations.slice(0, 5).map((gen) => (
-                      <div key={gen.id} className="rounded-lg bg-ash p-3">
+                      <div key={gen.id} className="rounded-lg bg-mist p-3">
                         <div className="flex items-center justify-between">
-                          <span className="text-xs text-mid">
+                          <span className="text-xs text-stone">
                             {formatDate(gen.created_at)} · {gen.tokens_used} tokens
                           </span>
-                          <span className="text-xs text-lime">{gen.status}</span>
+                          <span className="text-xs text-teal">{gen.status}</span>
                         </div>
-                        <p className="mt-1 text-sm text-pale line-clamp-2">
+                        <p className="mt-1 text-sm text-mid line-clamp-2">
                           {gen.raw_output?.slice(0, 150)}...
                         </p>
                       </div>
@@ -205,11 +205,11 @@ export default function ConsultantProjectPage({ params }: ConsultantProjectPageP
             </TabsContent>
 
             <TabsContent value="messages" className="mt-4">
-              <div className="rounded-xl border border-steel/30 bg-smoke">
+              <div className="rounded-xl border border-sand bg-white">
                 {user ? (
                   <ProjectMessages projectId={id} currentUserId={user.id} />
                 ) : (
-                  <p className="p-6 text-sm text-mid">Cargando...</p>
+                  <p className="p-6 text-sm text-stone">Cargando...</p>
                 )}
               </div>
             </TabsContent>
@@ -217,32 +217,32 @@ export default function ConsultantProjectPage({ params }: ConsultantProjectPageP
         </div>
 
         <div className="space-y-6">
-          <div className="rounded-xl border border-steel/30 bg-smoke p-6">
-            <h3 className="text-sm font-medium text-off-white">Info del cliente</h3>
+          <div className="rounded-xl border border-sand bg-white p-6">
+            <h3 className="text-sm font-medium text-forest">Info del cliente</h3>
             <dl className="mt-4 space-y-3">
               <div>
-                <dt className="text-xs text-mid">Empresa</dt>
-                <dd className="text-sm text-off-white">
+                <dt className="text-xs text-stone">Empresa</dt>
+                <dd className="text-sm text-forest">
                   {(project as { client?: { company_name?: string } }).client?.company_name || "—"}
                 </dd>
               </div>
               <div>
-                <dt className="text-xs text-mid">Contacto</dt>
-                <dd className="text-sm text-off-white">
+                <dt className="text-xs text-stone">Contacto</dt>
+                <dd className="text-sm text-forest">
                   {(project as { client?: { full_name?: string } }).client?.full_name || "—"}
                 </dd>
               </div>
               <div>
-                <dt className="text-xs text-mid">Tipo</dt>
-                <dd className="text-sm text-off-white">{project.type?.replace("_", " ") || "—"}</dd>
+                <dt className="text-xs text-stone">Tipo</dt>
+                <dd className="text-sm text-forest">{project.type?.replace("_", " ") || "—"}</dd>
               </div>
               <div>
-                <dt className="text-xs text-mid">Urgencia</dt>
-                <dd className="text-sm text-off-white capitalize">{project.urgency}</dd>
+                <dt className="text-xs text-stone">Urgencia</dt>
+                <dd className="text-sm text-forest capitalize">{project.urgency}</dd>
               </div>
               <div>
-                <dt className="text-xs text-mid">Creado</dt>
-                <dd className="text-sm text-off-white">{formatDate(project.created_at)}</dd>
+                <dt className="text-xs text-stone">Creado</dt>
+                <dd className="text-sm text-forest">{formatDate(project.created_at)}</dd>
               </div>
             </dl>
           </div>

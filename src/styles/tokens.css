@@ -1,15 +1,32 @@
 :root {
-  --black:      #0A0A0A;
-  --smoke:      #1C1C1C;
-  --ash:        #2A2A2A;
-  --steel:      #3D3D3D;
-  --mid:        #666666;
-  --pale:       #AAAAAA;
-  --off-white:  #F5F5F0;
-  --lime:       #C8F060;
-  --lime-dim:   #9FC840;
+  /* Base palette */
+  --cream:       #FEFAF4;
+  --white:       #FFFFFF;
+  --forest:      #1A3C34;
+  --forest-light:#2D5A4E;
+  --sage:        #84A98C;
+  --mist:        #F5F0EB;
+  --sand:        #E8E4DC;
+  --stone:       #B8B0A4;
+  --mid:         #7A7568;
 
-  --font-display: 'Syne', sans-serif;
-  --font-body:    'DM Sans', sans-serif;
-  --font-mono:    'DM Mono', monospace;
+  /* Brand gradient stops */
+  --coral:       #FF6B35;
+  --pink:        #FF3CAC;
+  --violet:      #7B2FFF;
+
+  /* Secondary */
+  --teal:        #00C9A7;
+  --teal-light:  #E6FAF5;
+  --yellow:      #FCC30B;
+
+  /* Functional */
+  --coral-soft:  #FFF3EE;
+  --danger:      #E53E3E;
+  --danger-soft: #FEF2F2;
+
+  /* Fonts */
+  --font-display: 'Plus Jakarta Sans', sans-serif;
+  --font-body:    'Inter', sans-serif;
+  --font-mono:    'JetBrains Mono', monospace;
 }

@@ -97,8 +97,8 @@ export default function MessagesPage() {
   if (loading) {
     return (
       <div>
-        <h1 className="font-display text-2xl font-800 text-off-white">Mensajes</h1>
-        <div className="mt-8 h-96 animate-pulse rounded-xl bg-smoke" />
+        <h1 className="font-display text-2xl font-800 text-forest">Mensajes</h1>
+        <div className="mt-8 h-96 animate-pulse rounded-xl bg-white" />
       </div>
     );
   }
@@ -106,13 +106,13 @@ export default function MessagesPage() {
   if (conversations.length === 0) {
     return (
       <div>
-        <h1 className="font-display text-2xl font-800 text-off-white">Mensajes</h1>
-        <p className="mt-1 text-sm text-pale">
+        <h1 className="font-display text-2xl font-800 text-forest">Mensajes</h1>
+        <p className="mt-1 text-sm text-mid">
           Comunicaci&oacute;n directa con tu consultor asignado.
         </p>
-        <div className="mt-8 flex flex-col items-center justify-center rounded-xl border border-steel/30 bg-smoke p-12">
-          <MessageSquare size={40} className="text-steel" />
-          <p className="mt-4 text-sm text-mid">
+        <div className="mt-8 flex flex-col items-center justify-center rounded-xl border border-sand bg-white p-12">
+          <MessageSquare size={40} className="text-sand" />
+          <p className="mt-4 text-sm text-stone">
             No hay conversaciones todav&iacute;a. Los mensajes aparecer&aacute;n aqu&iacute; cuando tengas un proyecto activo.
           </p>
         </div>
@@ -122,8 +122,8 @@ export default function MessagesPage() {
 
   return (
     <div>
-      <h1 className="font-display text-2xl font-800 text-off-white">Mensajes</h1>
-      <p className="mt-1 text-sm text-pale">
+      <h1 className="font-display text-2xl font-800 text-forest">Mensajes</h1>
+      <p className="mt-1 text-sm text-mid">
         Comunicaci&oacute;n directa con tu consultor asignado.
       </p>
 
@@ -138,23 +138,23 @@ export default function MessagesPage() {
                 className={cn(
                   "w-full rounded-xl border p-4 text-left transition-colors",
                   selectedProject === convo.projectId
-                    ? "border-lime bg-lime/5"
-                    : "border-steel/30 bg-smoke hover:border-steel"
+                    ? "border-teal bg-teal-light"
+                    : "border-sand bg-white hover:border-sand"
                 )}
               >
                 <div className="flex items-center justify-between">
-                  <span className="text-sm font-medium text-off-white">{convo.projectTitle}</span>
+                  <span className="text-sm font-medium text-forest">{convo.projectTitle}</span>
                   {convo.unreadCount > 0 && (
-                    <span className="flex h-5 w-5 items-center justify-center rounded-full bg-lime text-xs font-medium text-black">
+                    <span className="flex h-5 w-5 items-center justify-center rounded-full bg-coral text-xs font-medium text-white">
                       {convo.unreadCount}
                     </span>
                   )}
                 </div>
                 {convo.lastMessage && (
-                  <p className="mt-1 text-xs text-mid line-clamp-1">{convo.lastMessage}</p>
+                  <p className="mt-1 text-xs text-stone line-clamp-1">{convo.lastMessage}</p>
                 )}
                 {convo.lastMessageAt && (
-                  <p className="mt-1 text-xs text-mid">{formatRelativeTime(convo.lastMessageAt)}</p>
+                  <p className="mt-1 text-xs text-stone">{formatRelativeTime(convo.lastMessageAt)}</p>
                 )}
               </button>
             ))}
@@ -165,12 +165,12 @@ export default function MessagesPage() {
         </div>
 
         {/* Chat area */}
-        <div className="lg:col-span-2 rounded-xl border border-steel/30 bg-smoke">
+        <div className="lg:col-span-2 rounded-xl border border-sand bg-white">
           {selectedProject && user ? (
             <ProjectMessages projectId={selectedProject} currentUserId={user.id} />
           ) : (
             <div className="flex h-96 items-center justify-center">
-              <p className="text-sm text-mid">Selecciona una conversaci&oacute;n</p>
+              <p className="text-sm text-stone">Selecciona una conversaci&oacute;n</p>
             </div>
           )}
         </div>

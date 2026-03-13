@@ -14,7 +14,7 @@ interface InvoiceWithProject extends Invoice {
 }
 
 const statusConfig: Record<string, { label: string; className: string }> = {
-  draft: { label: "Borrador", className: "bg-steel/30 text-pale" },
+  draft: { label: "Borrador", className: "bg-mist text-mid" },
   sent: { label: "Enviada", className: "bg-blue-500/20 text-blue-400" },
   paid: { label: "Pagada", className: "bg-emerald-500/20 text-emerald-400" },
   overdue: { label: "Vencida", className: "bg-red-500/20 text-red-400" },
@@ -51,30 +51,30 @@ export default function AdminBillingPage() {
 
   return (
     <div>
-      <h1 className="font-display text-2xl font-800 text-off-white">
+      <h1 className="font-display text-2xl font-800 text-forest">
         Facturaci&oacute;n
       </h1>
-      <p className="mt-1 text-sm text-pale">
+      <p className="mt-1 text-sm text-mid">
         Todas las facturas de la plataforma.
       </p>
 
       {/* Summary */}
       <div className="mt-8 grid gap-4 sm:grid-cols-3">
-        <div className="rounded-xl border border-steel/30 bg-smoke p-5">
-          <span className="text-sm text-pale">Total cobrado</span>
-          <p className="mt-2 font-display text-2xl font-700 text-off-white">
+        <div className="rounded-xl border border-sand bg-white p-5">
+          <span className="text-sm text-mid">Total cobrado</span>
+          <p className="mt-2 font-display text-2xl font-700 text-forest">
             {loading ? "..." : formatEUR(totalPaid / 100)}
           </p>
         </div>
-        <div className="rounded-xl border border-steel/30 bg-smoke p-5">
-          <span className="text-sm text-pale">Pendiente de cobro</span>
-          <p className="mt-2 font-display text-2xl font-700 text-off-white">
+        <div className="rounded-xl border border-sand bg-white p-5">
+          <span className="text-sm text-mid">Pendiente de cobro</span>
+          <p className="mt-2 font-display text-2xl font-700 text-forest">
             {loading ? "..." : formatEUR(totalPending / 100)}
           </p>
         </div>
-        <div className="rounded-xl border border-steel/30 bg-smoke p-5">
-          <span className="text-sm text-pale">Facturas totales</span>
-          <p className="mt-2 font-display text-2xl font-700 text-off-white">
+        <div className="rounded-xl border border-sand bg-white p-5">
+          <span className="text-sm text-mid">Facturas totales</span>
+          <p className="mt-2 font-display text-2xl font-700 text-forest">
             {loading ? "..." : invoices.length}
           </p>
         </div>
@@ -84,19 +84,19 @@ export default function AdminBillingPage() {
       {loading ? (
         <div className="mt-8 space-y-3">
           {[1, 2, 3].map((i) => (
-            <div key={i} className="h-16 animate-pulse rounded-xl bg-smoke" />
+            <div key={i} className="h-16 animate-pulse rounded-xl bg-white" />
           ))}
         </div>
       ) : invoices.length === 0 ? (
-        <div className="mt-8 flex flex-col items-center justify-center rounded-xl border border-steel/30 bg-smoke p-12">
-          <CreditCard size={40} className="text-steel" />
-          <p className="mt-4 text-sm text-mid">No hay facturas.</p>
+        <div className="mt-8 flex flex-col items-center justify-center rounded-xl border border-sand bg-white p-12">
+          <CreditCard size={40} className="text-sand" />
+          <p className="mt-4 text-sm text-stone">No hay facturas.</p>
         </div>
       ) : (
         <div className="mt-8 overflow-x-auto">
           <table className="w-full text-left text-sm">
             <thead>
-              <tr className="border-b border-steel/30 text-xs uppercase text-mid">
+              <tr className="border-b border-sand text-xs uppercase text-stone">
                 <th className="pb-3 pr-4 font-medium">Proyecto</th>
                 <th className="pb-3 pr-4 font-medium">Cliente</th>
                 <th className="pb-3 pr-4 font-medium">Importe</th>
@@ -104,22 +104,22 @@ export default function AdminBillingPage() {
                 <th className="pb-3 font-medium">Fecha</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-steel/20">
+            <tbody className="divide-y divide-sand">
               {invoices.map((inv) => {
                 const config =
                   statusConfig[inv.status] || statusConfig.draft;
 
                 return (
-                  <tr key={inv.id} className="text-off-white">
+                  <tr key={inv.id} className="text-forest">
                     <td className="py-3 pr-4">
                       <div className="flex items-center gap-2">
-                        <FileText size={16} className="text-pale" />
+                        <FileText size={16} className="text-mid" />
                         <span className="font-medium">
                           {inv.project?.title || "—"}
                         </span>
                       </div>
                     </td>
-                    <td className="py-3 pr-4 text-pale">
+                    <td className="py-3 pr-4 text-mid">
                       {inv.client?.company_name ||
                         inv.client?.full_name ||
                         "—"}
@@ -132,7 +132,7 @@ export default function AdminBillingPage() {
                         {config.label}
                       </Badge>
                     </td>
-                    <td className="py-3 text-pale">
+                    <td className="py-3 text-mid">
                       {inv.issued_at ? formatDate(inv.issued_at) : "—"}
                     </td>
                   </tr>

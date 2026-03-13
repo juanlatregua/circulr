@@ -35,7 +35,7 @@ export function Pagination({
       <button
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
-        className="flex h-8 w-8 items-center justify-center rounded-lg text-pale transition-colors hover:bg-ash/50 hover:text-off-white disabled:opacity-30 disabled:pointer-events-none"
+        className="flex h-8 w-8 items-center justify-center rounded-lg text-mid transition-colors hover:bg-mist hover:text-forest disabled:opacity-30 disabled:pointer-events-none"
         aria-label="Página anterior"
       >
         <ChevronLeft size={16} />
@@ -43,7 +43,7 @@ export function Pagination({
 
       {pages.map((page, i) =>
         page === "ellipsis" ? (
-          <span key={`e${i}`} className="px-1 text-xs text-mid">
+          <span key={`e${i}`} className="px-1 text-xs text-stone">
             ...
           </span>
         ) : (
@@ -53,8 +53,8 @@ export function Pagination({
             className={cn(
               "flex h-8 min-w-8 items-center justify-center rounded-lg px-2 text-sm transition-colors",
               page === currentPage
-                ? "bg-lime text-black font-medium"
-                : "text-pale hover:bg-ash/50 hover:text-off-white"
+                ? "bg-gradient-primary text-white font-medium"
+                : "text-mid hover:bg-mist hover:text-forest"
             )}
           >
             {page}
@@ -65,7 +65,7 @@ export function Pagination({
       <button
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
-        className="flex h-8 w-8 items-center justify-center rounded-lg text-pale transition-colors hover:bg-ash/50 hover:text-off-white disabled:opacity-30 disabled:pointer-events-none"
+        className="flex h-8 w-8 items-center justify-center rounded-lg text-mid transition-colors hover:bg-mist hover:text-forest disabled:opacity-30 disabled:pointer-events-none"
         aria-label="Página siguiente"
       >
         <ChevronRight size={16} />

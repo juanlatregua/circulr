@@ -95,14 +95,14 @@ export default function AdminDashboard() {
   return (
     <div>
       <div className="flex items-center gap-3">
-        <h1 className="font-display text-2xl font-800 text-off-white">
+        <h1 className="font-display text-2xl font-800 text-forest">
           Panel de Administraci&oacute;n
         </h1>
         <span className="rounded-full bg-red-500/20 px-2.5 py-0.5 text-xs font-medium text-red-400">
           Admin
         </span>
       </div>
-      <p className="mt-1 text-sm text-pale">
+      <p className="mt-1 text-sm text-mid">
         Vista general de la plataforma CIRCULR.
       </p>
 
@@ -111,22 +111,22 @@ export default function AdminDashboard() {
           ? [1, 2, 3, 4].map((i) => (
               <div
                 key={i}
-                className="h-28 animate-pulse rounded-xl bg-smoke"
+                className="h-28 animate-pulse rounded-xl bg-white"
               />
             ))
           : cards.map((card) => (
               <div
                 key={card.label}
-                className="rounded-xl border border-steel/30 bg-smoke p-5"
+                className="rounded-xl border border-sand bg-white p-5"
               >
                 <div className="flex items-center gap-3">
-                  <card.icon size={20} className="text-lime" />
-                  <span className="text-sm text-pale">{card.label}</span>
+                  <card.icon size={20} className="text-coral" />
+                  <span className="text-sm text-mid">{card.label}</span>
                 </div>
-                <p className="mt-3 font-display text-2xl font-700 text-off-white">
+                <p className="mt-3 font-display text-2xl font-700 text-forest">
                   {card.value}
                 </p>
-                <p className="mt-1 text-xs text-mid">{card.sub}</p>
+                <p className="mt-1 text-xs text-stone">{card.sub}</p>
               </div>
             ))}
       </div>

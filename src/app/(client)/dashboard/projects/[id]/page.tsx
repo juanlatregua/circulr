@@ -55,8 +55,8 @@ export default function ProjectPage({ params }: ProjectPageProps) {
   if (loading) {
     return (
       <div className="space-y-4">
-        <div className="h-8 w-48 animate-pulse rounded bg-smoke" />
-        <div className="h-64 animate-pulse rounded-xl bg-smoke" />
+        <div className="h-8 w-48 animate-pulse rounded bg-white" />
+        <div className="h-64 animate-pulse rounded-xl bg-white" />
       </div>
     );
   }
@@ -64,8 +64,8 @@ export default function ProjectPage({ params }: ProjectPageProps) {
   if (!project) {
     return (
       <div className="text-center py-20">
-        <p className="text-mid">Proyecto no encontrado.</p>
-        <Link href="/dashboard/projects" className="mt-4 inline-block text-lime hover:underline">
+        <p className="text-stone">Proyecto no encontrado.</p>
+        <Link href="/dashboard/projects" className="mt-4 inline-block text-teal hover:underline">
           Volver a proyectos
         </Link>
       </div>
@@ -81,17 +81,17 @@ export default function ProjectPage({ params }: ProjectPageProps) {
     <div>
       <Link
         href="/dashboard/projects"
-        className="mb-4 inline-flex items-center gap-1 text-sm text-pale hover:text-off-white"
+        className="mb-4 inline-flex items-center gap-1 text-sm text-mid hover:text-forest"
       >
         <ArrowLeft size={14} /> Volver a proyectos
       </Link>
 
       <div className="flex items-start justify-between">
         <div>
-          <h1 className="font-display text-2xl font-800 text-off-white">
+          <h1 className="font-display text-2xl font-800 text-forest">
             {project.title}
           </h1>
-          <p className="mt-1 text-sm text-pale">{project.description}</p>
+          <p className="mt-1 text-sm text-mid">{project.description}</p>
         </div>
         <div className="flex items-center gap-3">
           <StatusBadge status={project.status} />
@@ -112,7 +112,7 @@ export default function ProjectPage({ params }: ProjectPageProps) {
                 }
               }}
               disabled={approving}
-              className="flex items-center gap-2 rounded-lg bg-lime px-3 py-1.5 text-sm font-medium text-black hover:bg-lime-dim disabled:opacity-50"
+              className="flex items-center gap-2 rounded-full bg-gradient-primary px-3 py-1.5 text-sm font-medium text-white hover:opacity-90 disabled:opacity-50"
             >
               {approving ? <Loader2 size={14} className="animate-spin" /> : <CheckCircle size={14} />}
               Aprobar entregable
@@ -124,26 +124,26 @@ export default function ProjectPage({ params }: ProjectPageProps) {
       <div className="mt-8 grid gap-6 lg:grid-cols-3">
         <div className="lg:col-span-2">
           <Tabs defaultValue="docs" className="w-full">
-            <TabsList className="bg-smoke border border-steel/30">
+            <TabsList className="bg-white border border-sand">
               <TabsTrigger value="docs">Documentos</TabsTrigger>
               <TabsTrigger value="deliverables">Entregables</TabsTrigger>
               <TabsTrigger value="messages">Mensajes</TabsTrigger>
             </TabsList>
 
             <TabsContent value="docs" className="mt-4">
-              <div className="rounded-xl border border-steel/30 bg-smoke p-6">
-                <h3 className="text-sm font-medium text-off-white mb-4">Tus documentos</h3>
+              <div className="rounded-xl border border-sand bg-white p-6">
+                <h3 className="text-sm font-medium text-forest mb-4">Tus documentos</h3>
                 {uploads.length === 0 ? (
-                  <p className="text-sm text-mid">No has subido documentos todavía.</p>
+                  <p className="text-sm text-stone">No has subido documentos todavía.</p>
                 ) : (
                   <div className="space-y-2">
                     {uploads.map((doc) => (
-                      <div key={doc.id} className="flex items-center justify-between rounded-lg bg-ash p-3">
+                      <div key={doc.id} className="flex items-center justify-between rounded-lg bg-mist p-3">
                         <div className="flex items-center gap-2">
-                          <FileText size={16} className="text-pale" />
-                          <span className="text-sm text-off-white">{doc.filename}</span>
+                          <FileText size={16} className="text-mid" />
+                          <span className="text-sm text-forest">{doc.filename}</span>
                         </div>
-                        <span className="text-xs text-mid">{formatDate(doc.created_at)}</span>
+                        <span className="text-xs text-stone">{formatDate(doc.created_at)}</span>
                       </div>
                     ))}
                   </div>
@@ -155,21 +155,21 @@ export default function ProjectPage({ params }: ProjectPageProps) {
             </TabsContent>
 
             <TabsContent value="deliverables" className="mt-4">
-              <div className="rounded-xl border border-steel/30 bg-smoke p-6">
-                <h3 className="text-sm font-medium text-off-white mb-4">Entregables</h3>
+              <div className="rounded-xl border border-sand bg-white p-6">
+                <h3 className="text-sm font-medium text-forest mb-4">Entregables</h3>
                 {deliverables.length === 0 ? (
-                  <p className="text-sm text-mid">
+                  <p className="text-sm text-stone">
                     Los entregables de tu consultor aparecerán aquí.
                   </p>
                 ) : (
                   <div className="space-y-2">
                     {deliverables.map((doc) => (
-                      <div key={doc.id} className="flex items-center justify-between rounded-lg bg-ash p-3">
+                      <div key={doc.id} className="flex items-center justify-between rounded-lg bg-mist p-3">
                         <div className="flex items-center gap-2">
-                          <FileText size={16} className="text-lime" />
-                          <span className="text-sm text-off-white">{doc.filename}</span>
+                          <FileText size={16} className="text-teal" />
+                          <span className="text-sm text-forest">{doc.filename}</span>
                         </div>
-                        <button className="text-lime hover:text-lime-dim">
+                        <button className="text-teal hover:opacity-90">
                           <Download size={16} />
                         </button>
                       </div>
@@ -180,11 +180,11 @@ export default function ProjectPage({ params }: ProjectPageProps) {
             </TabsContent>
 
             <TabsContent value="messages" className="mt-4">
-              <div className="rounded-xl border border-steel/30 bg-smoke">
+              <div className="rounded-xl border border-sand bg-white">
                 {user ? (
                   <ProjectMessages projectId={id} currentUserId={user.id} />
                 ) : (
-                  <p className="p-6 text-sm text-mid">Cargando...</p>
+                  <p className="p-6 text-sm text-stone">Cargando...</p>
                 )}
               </div>
             </TabsContent>
@@ -192,34 +192,34 @@ export default function ProjectPage({ params }: ProjectPageProps) {
         </div>
 
         <div className="space-y-6">
-          <div className="rounded-xl border border-steel/30 bg-smoke p-6">
-            <h3 className="text-sm font-medium text-off-white">Detalles</h3>
+          <div className="rounded-xl border border-sand bg-white p-6">
+            <h3 className="text-sm font-medium text-forest">Detalles</h3>
             <dl className="mt-4 space-y-3">
               <div>
-                <dt className="text-xs text-mid">Tipo</dt>
-                <dd className="text-sm text-off-white">{project.type?.replace("_", " ") || "—"}</dd>
+                <dt className="text-xs text-stone">Tipo</dt>
+                <dd className="text-sm text-forest">{project.type?.replace("_", " ") || "—"}</dd>
               </div>
               {project.price_eur && (
                 <div>
-                  <dt className="text-xs text-mid">Precio</dt>
-                  <dd className="text-sm text-off-white">{formatEUR(project.price_eur / 100)}</dd>
+                  <dt className="text-xs text-stone">Precio</dt>
+                  <dd className="text-sm text-forest">{formatEUR(project.price_eur / 100)}</dd>
                 </div>
               )}
               {project.deadline && (
                 <div>
-                  <dt className="text-xs text-mid">Deadline</dt>
-                  <dd className="text-sm text-off-white">{formatDate(project.deadline)}</dd>
+                  <dt className="text-xs text-stone">Deadline</dt>
+                  <dd className="text-sm text-forest">{formatDate(project.deadline)}</dd>
                 </div>
               )}
               <div>
-                <dt className="text-xs text-mid">Creado</dt>
-                <dd className="text-sm text-off-white">{formatDate(project.created_at)}</dd>
+                <dt className="text-xs text-stone">Creado</dt>
+                <dd className="text-sm text-forest">{formatDate(project.created_at)}</dd>
               </div>
             </dl>
           </div>
 
-          <div className="rounded-xl border border-steel/30 bg-smoke p-6">
-            <h3 className="text-sm font-medium text-off-white">Progreso</h3>
+          <div className="rounded-xl border border-sand bg-white p-6">
+            <h3 className="text-sm font-medium text-forest">Progreso</h3>
             <div className="mt-4">
               <ProjectTimeline currentStatus={project.status} />
             </div>

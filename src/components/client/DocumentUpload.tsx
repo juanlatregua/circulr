@@ -43,19 +43,19 @@ export function DocumentUpload({ projectId, onUploadComplete }: DocumentUploadPr
   }
 
   return (
-    <div className="rounded-xl border border-dashed border-steel/50 bg-smoke p-6">
+    <div className="rounded-xl border border-dashed border-sand bg-white p-6">
       {fileName ? (
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <File size={20} className="text-lime" />
-            <span className="text-sm text-off-white">{fileName}</span>
+            <File size={20} className="text-coral" />
+            <span className="text-sm text-forest">{fileName}</span>
           </div>
           <button
             onClick={() => {
               setFileName(null);
               if (inputRef.current) inputRef.current.value = "";
             }}
-            className="text-mid hover:text-off-white"
+            className="text-stone hover:text-forest"
           >
             <X size={18} />
           </button>
@@ -66,11 +66,11 @@ export function DocumentUpload({ projectId, onUploadComplete }: DocumentUploadPr
           disabled={uploading}
           className="flex w-full flex-col items-center gap-2 text-center"
         >
-          <Upload size={24} className="text-mid" />
-          <span className="text-sm text-pale">
+          <Upload size={24} className="text-stone" />
+          <span className="text-sm text-mid">
             {uploading ? "Subiendo..." : "Arrastra un archivo o haz clic para seleccionar"}
           </span>
-          <span className="text-xs text-mid">PDF, DOCX, XLSX — máximo 10MB</span>
+          <span className="text-xs text-stone">PDF, DOCX, XLSX — máximo 10MB</span>
         </button>
       )}
 

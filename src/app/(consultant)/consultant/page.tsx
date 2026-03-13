@@ -60,10 +60,10 @@ export default function ConsultantDashboard() {
 
   return (
     <div>
-      <h1 className="font-display text-2xl font-800 text-off-white">
+      <h1 className="font-display text-2xl font-800 text-forest">
         Panel del Consultor
       </h1>
-      <p className="mt-1 text-sm text-pale">
+      <p className="mt-1 text-sm text-mid">
         Gestiona tus proyectos y genera entregables con IA.
       </p>
 
@@ -71,13 +71,13 @@ export default function ConsultantDashboard() {
         {stats.map((stat) => (
           <div
             key={stat.label}
-            className="rounded-xl border border-steel/30 bg-smoke p-5"
+            className="rounded-xl border border-sand bg-white p-5"
           >
             <div className="flex items-center gap-3">
-              <stat.icon size={20} className="text-lime" />
-              <span className="text-sm text-pale">{stat.label}</span>
+              <stat.icon size={20} className="text-coral" />
+              <span className="text-sm text-mid">{stat.label}</span>
             </div>
-            <p className="mt-3 font-display text-2xl font-700 text-off-white">
+            <p className="mt-3 font-display text-2xl font-700 text-forest">
               {loading ? "…" : stat.value}
             </p>
           </div>
@@ -86,7 +86,7 @@ export default function ConsultantDashboard() {
 
       {!loading && activeProjects.length > 0 && (
         <div className="mt-8">
-          <h2 className="font-display text-lg font-700 text-off-white mb-4">
+          <h2 className="font-display text-lg font-700 text-forest mb-4">
             Vista Kanban
           </h2>
           <ProjectKanban projects={projects} />

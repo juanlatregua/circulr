@@ -12,7 +12,7 @@ import {
   Settings,
   Menu,
   Users,
-  Shield,
+  Wrench,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -40,6 +40,7 @@ const consultantLinks: SidebarLink[] = [
   { href: "/consultant/projects", label: "Proyectos", icon: <FolderOpen size={18} /> },
   { href: "/consultant/messages", label: "Mensajes", icon: <MessageSquare size={18} /> },
   { href: "/consultant/analytics", label: "Analytics", icon: <BarChart3 size={18} /> },
+  { href: "/consultant/tools", label: "Herramientas", icon: <Wrench size={18} /> },
 ];
 
 const adminLinks: SidebarLink[] = [
@@ -61,8 +62,8 @@ function SidebarNav({ links, pathname, settingsHref }: { links: SidebarLink[]; p
               className={cn(
                 "flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors",
                 pathname === link.href
-                  ? "bg-ash text-lime"
-                  : "text-pale hover:bg-ash/50 hover:text-off-white"
+                  ? "border-l-3 border-coral bg-coral-soft text-forest font-medium [&_svg]:text-teal"
+                  : "text-mid hover:bg-mist hover:text-forest [&_svg]:text-stone"
               )}
             >
               {link.icon}
@@ -72,14 +73,14 @@ function SidebarNav({ links, pathname, settingsHref }: { links: SidebarLink[]; p
         </div>
       </div>
 
-      <div className="border-t border-steel/30 p-3">
+      <div className="border-t border-sand p-3">
         <Link
           href={settingsHref}
           className={cn(
             "flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors",
             pathname === settingsHref
-              ? "bg-ash text-lime"
-              : "text-pale hover:bg-ash/50 hover:text-off-white"
+              ? "border-l-3 border-coral bg-coral-soft text-forest font-medium [&_svg]:text-teal"
+              : "text-mid hover:bg-mist hover:text-forest [&_svg]:text-stone"
           )}
         >
           <Settings size={18} />
@@ -99,20 +100,20 @@ export function Sidebar({ role }: SidebarProps) {
   return (
     <>
       {/* Desktop sidebar */}
-      <aside className="hidden md:flex h-full w-60 flex-col border-r border-steel/30 bg-smoke">
+      <aside className="hidden md:flex h-full w-60 flex-col border-r border-sand bg-white">
         <SidebarNav links={links} pathname={pathname} settingsHref={settingsHref} />
       </aside>
 
       {/* Mobile sidebar trigger + sheet */}
       <div className="md:hidden fixed bottom-4 left-4 z-50">
         <Sheet open={open} onOpenChange={setOpen}>
-          <SheetTrigger className="flex h-12 w-12 items-center justify-center rounded-full bg-lime text-black shadow-lg">
+          <SheetTrigger className="flex h-12 w-12 items-center justify-center rounded-full gradient-primary text-white shadow-lg">
             <Menu size={20} />
           </SheetTrigger>
-          <SheetContent side="left" className="w-60 bg-smoke border-steel/30 p-0">
+          <SheetContent side="left" className="w-60 bg-white border-sand p-0">
             <div className="flex h-full flex-col" onClick={() => setOpen(false)}>
-              <div className="px-4 py-3 border-b border-steel/30">
-                <Image src="/logo.svg" alt="CIRCULR" width={140} height={32} className="h-7 w-auto" />
+              <div className="px-4 py-3 border-b border-sand">
+                <Image src="/logo-dark.svg" alt="CIRCULR" width={140} height={32} className="h-7 w-auto" />
               </div>
               <SidebarNav links={links} pathname={pathname} settingsHref={settingsHref} />
             </div>

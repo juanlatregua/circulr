@@ -40,16 +40,16 @@ export default function ProjectsListPage() {
     <div>
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="font-display text-2xl font-800 text-off-white">
+          <h1 className="font-display text-2xl font-800 text-forest">
             Proyectos
           </h1>
-          <p className="mt-1 text-sm text-pale">
+          <p className="mt-1 text-sm text-mid">
             Todos tus proyectos de econom&iacute;a circular.
           </p>
         </div>
         <Link
           href="/dashboard/onboarding"
-          className="flex items-center gap-2 rounded-lg bg-lime px-4 py-2 text-sm font-medium text-black hover:bg-lime-dim"
+          className="flex items-center gap-2 rounded-full bg-gradient-primary px-4 py-2 text-sm font-medium text-white hover:opacity-90"
         >
           <Plus size={16} /> Nuevo proyecto
         </Link>
@@ -58,18 +58,18 @@ export default function ProjectsListPage() {
       {loading ? (
         <div className="mt-8 space-y-3">
           {[1, 2, 3].map((i) => (
-            <div key={i} className="h-20 animate-pulse rounded-xl bg-smoke" />
+            <div key={i} className="h-20 animate-pulse rounded-xl bg-white" />
           ))}
         </div>
       ) : projects.length === 0 ? (
-        <div className="mt-8 flex flex-col items-center justify-center rounded-xl border border-steel/30 bg-smoke p-12">
-          <FolderOpen size={40} className="text-steel" />
-          <p className="mt-4 text-sm text-mid">
+        <div className="mt-8 flex flex-col items-center justify-center rounded-xl border border-sand bg-white p-12">
+          <FolderOpen size={40} className="text-sand" />
+          <p className="mt-4 text-sm text-stone">
             No tienes proyectos todav&iacute;a.
           </p>
           <Link
             href="/dashboard/onboarding"
-            className="mt-4 rounded-lg bg-lime px-4 py-2 text-sm font-medium text-black hover:bg-lime-dim"
+            className="mt-4 rounded-full bg-gradient-primary px-4 py-2 text-sm font-medium text-white hover:opacity-90"
           >
             Crear primer proyecto
           </Link>
@@ -81,24 +81,24 @@ export default function ProjectsListPage() {
               <Link
                 key={project.id}
                 href={`/dashboard/projects/${project.id}`}
-                className="flex items-center justify-between rounded-xl border border-steel/30 bg-smoke p-5 transition-colors hover:border-steel"
+                className="flex items-center justify-between rounded-xl border border-sand bg-white p-5 transition-colors hover:border-sand"
               >
                 <div className="flex-1">
                   <div className="flex items-center gap-3">
-                    <h3 className="text-sm font-medium text-off-white">{project.title}</h3>
+                    <h3 className="text-sm font-medium text-forest">{project.title}</h3>
                     <StatusBadge status={project.status} />
                   </div>
-                  <p className="mt-1 text-xs text-mid line-clamp-1">
+                  <p className="mt-1 text-xs text-stone line-clamp-1">
                     {project.description}
                   </p>
                 </div>
                 <div className="ml-4 text-right">
                   {project.price_eur && (
-                    <p className="text-sm font-medium text-off-white">
+                    <p className="text-sm font-medium text-forest">
                       {formatEUR(project.price_eur / 100)}
                     </p>
                   )}
-                  <p className="text-xs text-mid">{formatDate(project.created_at)}</p>
+                  <p className="text-xs text-stone">{formatDate(project.created_at)}</p>
                 </div>
               </Link>
             ))}

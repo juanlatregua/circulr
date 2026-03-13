@@ -59,23 +59,23 @@ export default function SettingsPage() {
   if (userLoading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <Loader2 size={24} className="animate-spin text-pale" />
+        <Loader2 size={24} className="animate-spin text-mid" />
       </div>
     );
   }
 
   return (
     <div>
-      <h1 className="font-display text-2xl font-800 text-off-white">
+      <h1 className="font-display text-2xl font-800 text-forest">
         Configuraci&oacute;n
       </h1>
-      <p className="mt-1 text-sm text-pale">
+      <p className="mt-1 text-sm text-mid">
         Gestiona tu perfil y preferencias.
       </p>
 
       <form onSubmit={handleSave} className="mt-8 max-w-lg space-y-5">
         <div>
-          <label htmlFor="full_name" className="block text-sm font-medium text-pale">
+          <label htmlFor="full_name" className="block text-sm font-medium text-mid">
             Nombre completo
           </label>
           <input
@@ -83,12 +83,12 @@ export default function SettingsPage() {
             type="text"
             value={form.full_name}
             onChange={(e) => setForm({ ...form, full_name: e.target.value })}
-            className="mt-1.5 w-full rounded-lg border border-steel/30 bg-smoke px-3 py-2 text-sm text-off-white placeholder:text-mid focus:border-lime focus:outline-none"
+            className="mt-1.5 w-full rounded-lg border border-sand bg-white px-3 py-2 text-sm text-forest placeholder:text-stone focus:border-teal focus:outline-none"
           />
         </div>
 
         <div>
-          <label htmlFor="company_name" className="block text-sm font-medium text-pale">
+          <label htmlFor="company_name" className="block text-sm font-medium text-mid">
             Empresa
           </label>
           <input
@@ -96,12 +96,12 @@ export default function SettingsPage() {
             type="text"
             value={form.company_name}
             onChange={(e) => setForm({ ...form, company_name: e.target.value })}
-            className="mt-1.5 w-full rounded-lg border border-steel/30 bg-smoke px-3 py-2 text-sm text-off-white placeholder:text-mid focus:border-lime focus:outline-none"
+            className="mt-1.5 w-full rounded-lg border border-sand bg-white px-3 py-2 text-sm text-forest placeholder:text-stone focus:border-teal focus:outline-none"
           />
         </div>
 
         <div>
-          <label htmlFor="sector" className="block text-sm font-medium text-pale">
+          <label htmlFor="sector" className="block text-sm font-medium text-mid">
             Sector
           </label>
           <input
@@ -109,19 +109,19 @@ export default function SettingsPage() {
             type="text"
             value={form.sector}
             onChange={(e) => setForm({ ...form, sector: e.target.value })}
-            className="mt-1.5 w-full rounded-lg border border-steel/30 bg-smoke px-3 py-2 text-sm text-off-white placeholder:text-mid focus:border-lime focus:outline-none"
+            className="mt-1.5 w-full rounded-lg border border-sand bg-white px-3 py-2 text-sm text-forest placeholder:text-stone focus:border-teal focus:outline-none"
           />
         </div>
 
         <div>
-          <label htmlFor="company_size" className="block text-sm font-medium text-pale">
+          <label htmlFor="company_size" className="block text-sm font-medium text-mid">
             Tama&ntilde;o de empresa
           </label>
           <select
             id="company_size"
             value={form.company_size}
             onChange={(e) => setForm({ ...form, company_size: e.target.value })}
-            className="mt-1.5 w-full rounded-lg border border-steel/30 bg-smoke px-3 py-2 text-sm text-off-white focus:border-lime focus:outline-none"
+            className="mt-1.5 w-full rounded-lg border border-sand bg-white px-3 py-2 text-sm text-forest focus:border-teal focus:outline-none"
           >
             <option value="">Seleccionar...</option>
             <option value="1-10">1-10 empleados</option>
@@ -133,7 +133,7 @@ export default function SettingsPage() {
         </div>
 
         <div>
-          <label htmlFor="phone" className="block text-sm font-medium text-pale">
+          <label htmlFor="phone" className="block text-sm font-medium text-mid">
             Tel&eacute;fono
           </label>
           <input
@@ -141,12 +141,12 @@ export default function SettingsPage() {
             type="tel"
             value={form.phone}
             onChange={(e) => setForm({ ...form, phone: e.target.value })}
-            className="mt-1.5 w-full rounded-lg border border-steel/30 bg-smoke px-3 py-2 text-sm text-off-white placeholder:text-mid focus:border-lime focus:outline-none"
+            className="mt-1.5 w-full rounded-lg border border-sand bg-white px-3 py-2 text-sm text-forest placeholder:text-stone focus:border-teal focus:outline-none"
           />
         </div>
 
         <div className="flex items-center gap-3">
-          <p className="text-xs text-mid">
+          <p className="text-xs text-stone">
             Email: {user?.email}
           </p>
         </div>
@@ -161,7 +161,7 @@ export default function SettingsPage() {
         <button
           type="submit"
           disabled={saving}
-          className="flex items-center gap-2 rounded-lg bg-lime px-5 py-2.5 text-sm font-medium text-black hover:bg-lime-dim disabled:opacity-50"
+          className="flex items-center gap-2 rounded-full bg-gradient-primary px-5 py-2.5 text-sm font-medium text-white hover:opacity-90 disabled:opacity-50"
         >
           {saving ? <Loader2 size={16} className="animate-spin" /> : <Save size={16} />}
           Guardar cambios

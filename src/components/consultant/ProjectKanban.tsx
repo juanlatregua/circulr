@@ -16,10 +16,10 @@ export function ProjectKanban({ projects }: ProjectKanbanProps) {
   return (
     <div className="grid gap-4 md:grid-cols-3">
       {columns.map((col) => (
-        <div key={col.status} className="rounded-xl border border-steel/30 bg-smoke p-4">
+        <div key={col.status} className="rounded-xl border border-sand bg-white p-4">
           <div className="mb-4 flex items-center justify-between">
-            <h3 className="text-sm font-medium text-off-white">{col.label}</h3>
-            <span className="text-xs text-mid">
+            <h3 className="text-sm font-medium text-forest">{col.label}</h3>
+            <span className="text-xs text-stone">
               {projects.filter((p) => p.status === col.status).length}
             </span>
           </div>
@@ -30,10 +30,10 @@ export function ProjectKanban({ projects }: ProjectKanbanProps) {
                 <Link
                   key={project.id}
                   href={`/consultant/projects/${project.id}`}
-                  className="block rounded-lg border border-steel/20 bg-ash p-3 transition-colors hover:border-steel"
+                  className="block rounded-lg border border-sand bg-mist p-3 transition-colors hover:border-stone"
                 >
-                  <h4 className="text-sm font-medium text-off-white">{project.title}</h4>
-                  <p className="mt-1 text-xs text-mid line-clamp-2">{project.description}</p>
+                  <h4 className="text-sm font-medium text-forest">{project.title}</h4>
+                  <p className="mt-1 text-xs text-stone line-clamp-2">{project.description}</p>
                   <div className="mt-2">
                     <StatusBadge status={project.status} />
                   </div>

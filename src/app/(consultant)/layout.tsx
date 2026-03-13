@@ -7,7 +7,7 @@ export default function ConsultantLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex h-screen flex-col bg-black">
+    <div className="flex h-screen flex-col bg-cream">
       <Navbar variant="app" />
       <div className="flex flex-1 overflow-hidden">
         <Sidebar role="consultant" />

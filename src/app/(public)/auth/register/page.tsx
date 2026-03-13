@@ -36,52 +36,51 @@ export default function RegisterPage() {
       return;
     }
 
-    // If email confirmation is disabled, redirect directly to onboarding
     if (data.session) {
       window.location.href = "/dashboard/onboarding";
       return;
     }
 
-    // Email confirmation required — show confirmation message
     setLoading(false);
     setError(null);
-    // Show success state by replacing form
     document.getElementById("register-form")?.classList.add("hidden");
     document.getElementById("success-message")?.classList.remove("hidden");
   }
 
+  const inputClass = "mt-1 w-full rounded-lg border border-sand bg-cream/50 px-4 py-2.5 text-sm text-forest placeholder:text-stone focus:border-coral focus:outline-none focus:ring-1 focus:ring-coral/30";
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-black px-4">
-      <div className="w-full max-w-sm">
+    <div className="flex min-h-screen items-center justify-center bg-cream px-4 py-12">
+      <div className="w-full max-w-sm rounded-2xl border border-sand bg-white p-8 shadow-sm">
         <div id="success-message" className="hidden text-center">
-          <h1 className="font-display text-3xl font-800 text-off-white">
+          <h1 className="font-display text-2xl font-800 text-forest">
             Revisa tu email
           </h1>
-          <p className="mt-4 text-sm text-pale">
-            Hemos enviado un enlace de confirmación a <strong className="text-off-white">{email}</strong>.
+          <p className="mt-4 text-sm text-mid">
+            Hemos enviado un enlace de confirmación a <strong className="text-forest">{email}</strong>.
           </p>
           <Link
             href="/auth/login"
-            className="mt-6 inline-block text-sm text-lime hover:underline"
+            className="mt-6 inline-block text-sm text-teal font-medium hover:underline"
           >
             Ir a iniciar sesión
           </Link>
         </div>
 
         <div id="register-form">
-          <Link href="/" className="mb-8 block">
-            <Image src="/logo.svg" alt="CIRCULR" width={180} height={40} className="h-9 w-auto" />
+          <Link href="/" className="mb-8 flex justify-center">
+            <Image src="/logo-dark.svg" alt="CIRCULR" width={180} height={40} className="h-9 w-auto" />
           </Link>
-          <h1 className="font-display text-3xl font-800 text-off-white">
+          <h1 className="font-display text-2xl font-800 text-forest text-center">
             Crear cuenta
           </h1>
-          <p className="mt-2 text-sm text-pale">
+          <p className="mt-2 text-sm text-mid text-center">
             Empieza tu transición circular
           </p>
 
           <form onSubmit={handleRegister} className="mt-8 space-y-4">
             <div>
-              <label htmlFor="fullName" className="block text-sm text-pale">
+              <label htmlFor="fullName" className="block text-sm font-medium text-forest">
                 Nombre completo
               </label>
               <input
@@ -90,13 +89,13 @@ export default function RegisterPage() {
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
                 required
-                className="mt-1 w-full rounded-lg border border-steel/30 bg-smoke px-4 py-2.5 text-sm text-off-white placeholder:text-mid focus:border-lime focus:outline-none"
+                className={inputClass}
                 placeholder="María García"
               />
             </div>
 
             <div>
-              <label htmlFor="companyName" className="block text-sm text-pale">
+              <label htmlFor="companyName" className="block text-sm font-medium text-forest">
                 Empresa
               </label>
               <input
@@ -105,13 +104,13 @@ export default function RegisterPage() {
                 value={companyName}
                 onChange={(e) => setCompanyName(e.target.value)}
                 required
-                className="mt-1 w-full rounded-lg border border-steel/30 bg-smoke px-4 py-2.5 text-sm text-off-white placeholder:text-mid focus:border-lime focus:outline-none"
+                className={inputClass}
                 placeholder="Empresa S.L."
               />
             </div>
 
             <div>
-              <label htmlFor="email" className="block text-sm text-pale">
+              <label htmlFor="email" className="block text-sm font-medium text-forest">
                 Email corporativo
               </label>
               <input
@@ -120,13 +119,13 @@ export default function RegisterPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="mt-1 w-full rounded-lg border border-steel/30 bg-smoke px-4 py-2.5 text-sm text-off-white placeholder:text-mid focus:border-lime focus:outline-none"
+                className={inputClass}
                 placeholder="tu@empresa.com"
               />
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm text-pale">
+              <label htmlFor="password" className="block text-sm font-medium text-forest">
                 Contraseña
               </label>
               <input
@@ -136,19 +135,19 @@ export default function RegisterPage() {
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 minLength={8}
-                className="mt-1 w-full rounded-lg border border-steel/30 bg-smoke px-4 py-2.5 text-sm text-off-white placeholder:text-mid focus:border-lime focus:outline-none"
+                className={inputClass}
                 placeholder="Mínimo 8 caracteres"
               />
             </div>
 
             {error && (
-              <p className="text-sm text-red-400">{error}</p>
+              <p className="text-sm text-danger">{error}</p>
             )}
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full rounded-lg bg-lime px-4 py-2.5 text-sm font-medium text-black transition-colors hover:bg-lime-dim disabled:opacity-50"
+              className="w-full gradient-primary rounded-full px-4 py-2.5 text-sm font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-50"
             >
               {loading ? "Creando cuenta..." : "Crear cuenta"}
             </button>
@@ -156,7 +155,7 @@ export default function RegisterPage() {
 
           <p className="mt-6 text-center text-sm text-mid">
             ¿Ya tienes cuenta?{" "}
-            <Link href="/auth/login" className="text-lime hover:underline">
+            <Link href="/auth/login" className="text-teal font-medium hover:underline">
               Inicia sesión
             </Link>
           </p>

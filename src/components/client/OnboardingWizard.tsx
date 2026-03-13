@@ -172,37 +172,37 @@ export function OnboardingWizard() {
             <div
               className={`flex h-8 w-8 items-center justify-center rounded-full text-sm font-medium ${
                 i <= currentStep
-                  ? "bg-lime text-black"
-                  : "bg-steel/30 text-mid"
+                  ? "bg-gradient-primary text-white"
+                  : "bg-mist text-stone"
               }`}
             >
               {i < currentStep ? <Check size={16} /> : i + 1}
             </div>
-            <span className="ml-2 hidden text-sm text-pale sm:block">{step.title}</span>
+            <span className="ml-2 hidden text-sm text-mid sm:block">{step.title}</span>
             {i < steps.length - 1 && (
-              <div className="mx-4 h-px w-12 bg-steel/30" />
+              <div className="mx-4 h-px w-12 bg-sand" />
             )}
           </div>
         ))}
       </div>
 
       {/* Step content */}
-      <div className="rounded-xl border border-steel/30 bg-smoke p-6">
-        <h2 className="font-display text-xl font-700 text-off-white">
+      <div className="rounded-xl border border-sand bg-white p-6">
+        <h2 className="font-display text-xl font-700 text-forest">
           {steps[currentStep].title}
         </h2>
-        <p className="mt-1 text-sm text-pale">{steps[currentStep].description}</p>
+        <p className="mt-1 text-sm text-mid">{steps[currentStep].description}</p>
 
         <div className="mt-6 space-y-4">
           {/* Step 1: Company Info */}
           {currentStep === 0 && (
             <>
               <div>
-                <Label className="text-pale">Sector</Label>
+                <Label className="text-mid">Sector</Label>
                 <select
                   value={form.sector}
                   onChange={(e) => updateForm("sector", e.target.value)}
-                  className="mt-1 w-full rounded-lg border border-steel/30 bg-ash px-4 py-2.5 text-sm text-off-white focus:border-lime focus:outline-none"
+                  className="mt-1 w-full rounded-lg border border-sand bg-mist px-4 py-2.5 text-sm text-forest focus:border-teal focus:outline-none"
                 >
                   <option value="">Selecciona un sector</option>
                   {SECTORS.map((s) => (
@@ -211,7 +211,7 @@ export function OnboardingWizard() {
                 </select>
               </div>
               <div>
-                <Label className="text-pale">Número de empleados</Label>
+                <Label className="text-mid">Número de empleados</Label>
                 <div className="mt-1 flex flex-wrap gap-2">
                   {SIZES.map((size) => (
                     <button
@@ -220,8 +220,8 @@ export function OnboardingWizard() {
                       onClick={() => updateForm("employees", size)}
                       className={`rounded-lg px-3 py-1.5 text-sm transition-colors ${
                         form.employees === size
-                          ? "bg-lime text-black"
-                          : "bg-ash text-pale hover:text-off-white"
+                          ? "bg-gradient-primary text-white"
+                          : "bg-mist text-mid hover:text-forest"
                       }`}
                     >
                       {size}
@@ -230,23 +230,23 @@ export function OnboardingWizard() {
                 </div>
               </div>
               <div>
-                <Label htmlFor="revenue" className="text-pale">Facturación anual (aprox.)</Label>
+                <Label htmlFor="revenue" className="text-mid">Facturación anual (aprox.)</Label>
                 <Input
                   id="revenue"
                   value={form.annual_revenue}
                   onChange={(e) => updateForm("annual_revenue", e.target.value)}
                   placeholder="Ej: 5M€"
-                  className="mt-1 border-steel/30 bg-ash text-off-white placeholder:text-mid focus:border-lime"
+                  className="mt-1 border-sand bg-mist text-forest placeholder:text-stone focus:border-teal"
                 />
               </div>
               <div>
-                <Label htmlFor="location" className="text-pale">Ubicación principal</Label>
+                <Label htmlFor="location" className="text-mid">Ubicación principal</Label>
                 <Input
                   id="location"
                   value={form.location}
                   onChange={(e) => updateForm("location", e.target.value)}
                   placeholder="Ej: Madrid, España"
-                  className="mt-1 border-steel/30 bg-ash text-off-white placeholder:text-mid focus:border-lime"
+                  className="mt-1 border-sand bg-mist text-forest placeholder:text-stone focus:border-teal"
                 />
               </div>
             </>
@@ -261,31 +261,31 @@ export function OnboardingWizard() {
                     type="checkbox"
                     checked={form.has_csrd_questionnaire}
                     onChange={(e) => updateForm("has_csrd_questionnaire", e.target.checked)}
-                    className="h-4 w-4 rounded border-steel/30 accent-lime"
+                    className="h-4 w-4 rounded border-sand accent-teal"
                   />
-                  <span className="text-sm text-off-white">¿Has recibido un cuestionario CSRD?</span>
+                  <span className="text-sm text-forest">¿Has recibido un cuestionario CSRD?</span>
                 </label>
 
                 {form.has_csrd_questionnaire && (
                   <div className="ml-7 space-y-3">
                     <div>
-                      <Label htmlFor="csrd_sender" className="text-pale">¿De quién?</Label>
+                      <Label htmlFor="csrd_sender" className="text-mid">¿De quién?</Label>
                       <Input
                         id="csrd_sender"
                         value={form.csrd_sender}
                         onChange={(e) => updateForm("csrd_sender", e.target.value)}
                         placeholder="Ej: Empresa matriz, cliente..."
-                        className="mt-1 border-steel/30 bg-ash text-off-white placeholder:text-mid focus:border-lime"
+                        className="mt-1 border-sand bg-mist text-forest placeholder:text-stone focus:border-teal"
                       />
                     </div>
                     <div>
-                      <Label htmlFor="csrd_deadline" className="text-pale">Fecha límite</Label>
+                      <Label htmlFor="csrd_deadline" className="text-mid">Fecha límite</Label>
                       <Input
                         id="csrd_deadline"
                         type="date"
                         value={form.csrd_deadline}
                         onChange={(e) => updateForm("csrd_deadline", e.target.value)}
-                        className="mt-1 border-steel/30 bg-ash text-off-white focus:border-lime"
+                        className="mt-1 border-sand bg-mist text-forest focus:border-teal"
                       />
                     </div>
                   </div>
@@ -296,9 +296,9 @@ export function OnboardingWizard() {
                     type="checkbox"
                     checked={form.has_pending_inspection}
                     onChange={(e) => updateForm("has_pending_inspection", e.target.checked)}
-                    className="h-4 w-4 rounded border-steel/30 accent-lime"
+                    className="h-4 w-4 rounded border-sand accent-teal"
                   />
-                  <span className="text-sm text-off-white">¿Tienes inspecciones ambientales pendientes?</span>
+                  <span className="text-sm text-forest">¿Tienes inspecciones ambientales pendientes?</span>
                 </label>
 
                 <label className="flex items-center gap-3">
@@ -306,14 +306,14 @@ export function OnboardingWizard() {
                     type="checkbox"
                     checked={form.energy_cost_concern}
                     onChange={(e) => updateForm("energy_cost_concern", e.target.checked)}
-                    className="h-4 w-4 rounded border-steel/30 accent-lime"
+                    className="h-4 w-4 rounded border-sand accent-teal"
                   />
-                  <span className="text-sm text-off-white">¿Los costes energéticos son una preocupación?</span>
+                  <span className="text-sm text-forest">¿Los costes energéticos son una preocupación?</span>
                 </label>
               </div>
 
               <div>
-                <Label className="text-pale">Principales tipos de residuos</Label>
+                <Label className="text-mid">Principales tipos de residuos</Label>
                 <div className="mt-2 flex flex-wrap gap-2">
                   {WASTE_TYPES.map((type) => (
                     <button
@@ -322,8 +322,8 @@ export function OnboardingWizard() {
                       onClick={() => toggleWasteType(type)}
                       className={`rounded-lg px-3 py-1.5 text-sm transition-colors ${
                         form.main_waste_types.includes(type)
-                          ? "bg-lime text-black"
-                          : "bg-ash text-pale hover:text-off-white"
+                          ? "bg-gradient-primary text-white"
+                          : "bg-mist text-mid hover:text-forest"
                       }`}
                     >
                       {type}
@@ -333,7 +333,7 @@ export function OnboardingWizard() {
               </div>
 
               <div>
-                <Label className="text-pale">Madurez en economía circular</Label>
+                <Label className="text-mid">Madurez en economía circular</Label>
                 <div className="mt-2 grid grid-cols-2 gap-2">
                   {([
                     { key: "none", label: "Sin experiencia" },
@@ -347,8 +347,8 @@ export function OnboardingWizard() {
                       onClick={() => updateForm("ce_maturity", opt.key)}
                       className={`rounded-lg px-3 py-2 text-sm transition-colors ${
                         form.ce_maturity === opt.key
-                          ? "bg-lime text-black"
-                          : "bg-ash text-pale hover:text-off-white"
+                          ? "bg-gradient-primary text-white"
+                          : "bg-mist text-mid hover:text-forest"
                       }`}
                     >
                       {opt.label}
@@ -363,7 +363,7 @@ export function OnboardingWizard() {
           {currentStep === 2 && (
             <>
               <div>
-                <Label className="text-pale">¿Qué servicio necesitas?</Label>
+                <Label className="text-mid">¿Qué servicio necesitas?</Label>
                 <div className="mt-2 space-y-2">
                   {PROJECT_TYPES.map((pt) => (
                     <button
@@ -372,19 +372,19 @@ export function OnboardingWizard() {
                       onClick={() => updateForm("project_type", pt.key)}
                       className={`w-full rounded-lg border p-3 text-left transition-colors ${
                         form.project_type === pt.key
-                          ? "border-lime bg-lime/10"
-                          : "border-steel/30 bg-ash hover:border-steel"
+                          ? "border-teal bg-teal-light"
+                          : "border-sand bg-mist hover:border-stone"
                       }`}
                     >
-                      <span className="text-sm font-medium text-off-white">{pt.label}</span>
-                      <p className="mt-0.5 text-xs text-mid">{pt.desc}</p>
+                      <span className="text-sm font-medium text-forest">{pt.label}</span>
+                      <p className="mt-0.5 text-xs text-stone">{pt.desc}</p>
                     </button>
                   ))}
                 </div>
               </div>
 
               <div>
-                <Label className="text-pale">Urgencia</Label>
+                <Label className="text-mid">Urgencia</Label>
                 <div className="mt-2 flex gap-2">
                   {([
                     { key: "standard", label: "Estándar" },
@@ -397,8 +397,8 @@ export function OnboardingWizard() {
                       onClick={() => updateForm("urgency", opt.key)}
                       className={`flex-1 rounded-lg px-3 py-2 text-sm transition-colors ${
                         form.urgency === opt.key
-                          ? "bg-lime text-black"
-                          : "bg-ash text-pale hover:text-off-white"
+                          ? "bg-gradient-primary text-white"
+                          : "bg-mist text-mid hover:text-forest"
                       }`}
                     >
                       {opt.label}
@@ -408,7 +408,7 @@ export function OnboardingWizard() {
               </div>
 
               <div>
-                <Label htmlFor="pain" className="text-pale">
+                <Label htmlFor="pain" className="text-mid">
                   ¿Cuál es tu principal dolor o necesidad?
                 </Label>
                 <Textarea
@@ -417,7 +417,7 @@ export function OnboardingWizard() {
                   onChange={(e) => updateForm("main_pain", e.target.value)}
                   placeholder="Describe brevemente tu situación y qué esperas conseguir..."
                   rows={4}
-                  className="mt-1 border-steel/30 bg-ash text-off-white placeholder:text-mid focus:border-lime"
+                  className="mt-1 border-sand bg-mist text-forest placeholder:text-stone focus:border-teal"
                 />
               </div>
             </>
@@ -433,7 +433,7 @@ export function OnboardingWizard() {
           <button
             onClick={() => setCurrentStep((s) => Math.max(0, s - 1))}
             disabled={currentStep === 0}
-            className="flex items-center gap-2 rounded-lg px-4 py-2 text-sm text-pale transition-colors hover:text-off-white disabled:opacity-30"
+            className="flex items-center gap-2 rounded-lg px-4 py-2 text-sm text-mid transition-colors hover:text-forest disabled:opacity-30"
           >
             <ArrowLeft size={16} /> Anterior
           </button>
@@ -441,7 +441,7 @@ export function OnboardingWizard() {
           {currentStep < steps.length - 1 ? (
             <button
               onClick={handleNext}
-              className="flex items-center gap-2 rounded-lg bg-lime px-4 py-2 text-sm font-medium text-black transition-colors hover:bg-lime-dim"
+              className="flex items-center gap-2 rounded-full bg-gradient-primary px-4 py-2 text-sm font-medium text-white transition-colors hover:opacity-90"
             >
               Siguiente <ArrowRight size={16} />
             </button>
@@ -449,7 +449,7 @@ export function OnboardingWizard() {
             <button
               onClick={handleSubmit}
               disabled={submitting}
-              className="flex items-center gap-2 rounded-lg bg-lime px-4 py-2 text-sm font-medium text-black transition-colors hover:bg-lime-dim disabled:opacity-50"
+              className="flex items-center gap-2 rounded-full bg-gradient-primary px-4 py-2 text-sm font-medium text-white transition-colors hover:opacity-90 disabled:opacity-50"
             >
               {submitting ? (
                 <>

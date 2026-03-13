@@ -34,12 +34,12 @@ const statusLabels: Record<string, string> = {
 };
 
 const statusColors: Record<string, string> = {
-  draft: "bg-steel/50",
+  draft: "bg-sand",
   pending_payment: "bg-yellow-500",
-  active: "bg-lime",
+  active: "bg-coral",
   in_review: "bg-blue-500",
   delivered: "bg-emerald-500",
-  closed: "bg-mid",
+  closed: "bg-stone",
 };
 
 export default function AnalyticsPage() {
@@ -142,10 +142,10 @@ export default function AnalyticsPage() {
 
   return (
     <div>
-      <h1 className="font-display text-2xl font-800 text-off-white">
+      <h1 className="font-display text-2xl font-800 text-forest">
         Analytics
       </h1>
-      <p className="mt-1 text-sm text-pale">
+      <p className="mt-1 text-sm text-mid">
         M&eacute;tricas de rendimiento y uso de IA.
       </p>
 
@@ -155,19 +155,19 @@ export default function AnalyticsPage() {
           ? [1, 2, 3, 4].map((i) => (
               <div
                 key={i}
-                className="h-24 animate-pulse rounded-xl bg-smoke"
+                className="h-24 animate-pulse rounded-xl bg-white"
               />
             ))
           : stats.map((stat) => (
               <div
                 key={stat.label}
-                className="rounded-xl border border-steel/30 bg-smoke p-5"
+                className="rounded-xl border border-sand bg-white p-5"
               >
                 <div className="flex items-center gap-3">
-                  <stat.icon size={20} className="text-lime" />
-                  <span className="text-sm text-pale">{stat.label}</span>
+                  <stat.icon size={20} className="text-coral" />
+                  <span className="text-sm text-mid">{stat.label}</span>
                 </div>
-                <p className="mt-3 font-display text-2xl font-700 text-off-white">
+                <p className="mt-3 font-display text-2xl font-700 text-forest">
                   {stat.value}
                 </p>
               </div>
@@ -176,14 +176,14 @@ export default function AnalyticsPage() {
 
       <div className="mt-8 grid gap-6 lg:grid-cols-2">
         {/* Projects by status chart */}
-        <div className="rounded-xl border border-steel/30 bg-smoke p-5">
-          <h2 className="font-display text-lg font-700 text-off-white mb-4">
+        <div className="rounded-xl border border-sand bg-white p-5">
+          <h2 className="font-display text-lg font-700 text-forest mb-4">
             Proyectos por estado
           </h2>
           {loading ? (
-            <div className="h-48 animate-pulse rounded bg-ash" />
+            <div className="h-48 animate-pulse rounded bg-mist" />
           ) : Object.keys(statusCounts).length === 0 ? (
-            <p className="text-sm text-mid py-8 text-center">
+            <p className="text-sm text-stone py-8 text-center">
               Sin datos todav&iacute;a.
             </p>
           ) : (
@@ -196,14 +196,14 @@ export default function AnalyticsPage() {
                 return (
                   <div key={key}>
                     <div className="flex items-center justify-between mb-1">
-                      <span className="text-xs text-pale">{label}</span>
-                      <span className="text-xs font-medium text-off-white">
+                      <span className="text-xs text-mid">{label}</span>
+                      <span className="text-xs font-medium text-forest">
                         {count}
                       </span>
                     </div>
-                    <div className="h-3 rounded-full bg-ash overflow-hidden">
+                    <div className="h-3 rounded-full bg-mist overflow-hidden">
                       <div
-                        className={`h-full rounded-full ${statusColors[key] || "bg-steel"} transition-all duration-500`}
+                        className={`h-full rounded-full ${statusColors[key] || "bg-sand"} transition-all duration-500`}
                         style={{ width: `${widthPercent}%` }}
                       />
                     </div>
@@ -215,10 +215,10 @@ export default function AnalyticsPage() {
         </div>
 
         {/* Recent activity feed */}
-        <div className="rounded-xl border border-steel/30 bg-smoke p-5">
-          <h2 className="font-display text-lg font-700 text-off-white mb-4">
+        <div className="rounded-xl border border-sand bg-white p-5">
+          <h2 className="font-display text-lg font-700 text-forest mb-4">
             <div className="flex items-center gap-2">
-              <Activity size={18} className="text-lime" />
+              <Activity size={18} className="text-teal" />
               Actividad reciente
             </div>
           </h2>
@@ -227,12 +227,12 @@ export default function AnalyticsPage() {
               {[1, 2, 3].map((i) => (
                 <div
                   key={i}
-                  className="h-10 animate-pulse rounded bg-ash"
+                  className="h-10 animate-pulse rounded bg-mist"
                 />
               ))}
             </div>
           ) : auditLog.length === 0 ? (
-            <p className="text-sm text-mid py-8 text-center">
+            <p className="text-sm text-stone py-8 text-center">
               Sin actividad registrada.
             </p>
           ) : (
@@ -240,20 +240,20 @@ export default function AnalyticsPage() {
               {auditLog.map((entry) => (
                 <div
                   key={entry.id}
-                  className="flex items-start gap-3 rounded-lg px-3 py-2 hover:bg-ash/30"
+                  className="flex items-start gap-3 rounded-lg px-3 py-2 hover:bg-mist"
                 >
-                  <div className="mt-1 h-2 w-2 shrink-0 rounded-full bg-lime" />
+                  <div className="mt-1 h-2 w-2 shrink-0 rounded-full bg-coral" />
                   <div className="min-w-0 flex-1">
-                    <p className="text-sm text-off-white truncate">
+                    <p className="text-sm text-forest truncate">
                       {formatAction(entry.action)}
                       {entry.resource_type && (
-                        <span className="text-pale">
+                        <span className="text-mid">
                           {" "}
                           &middot; {entry.resource_type}
                         </span>
                       )}
                     </p>
-                    <p className="text-xs text-mid">
+                    <p className="text-xs text-stone">
                       {formatRelativeTime(entry.created_at)}
                     </p>
                   </div>

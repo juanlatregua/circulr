@@ -60,6 +60,69 @@ export async function POST(request: NextRequest) {
       const projectId = session.metadata?.projectId;
       const userId = session.metadata?.userId;
 
+      // Handle Quick Tool payments
+      if (session.metadata?.type === "quick_tool") {
+        const orderId = session.metadata.order_id;
+        const toolSlug = session.metadata.tool_slug;
+
+        if (orderId) {
+          // Update order to processing
+          await supabase
+            .from("quick_orders")
+            .update({ status: "processing" })
+            .eq("id", orderId);
+
+          // Trigger AI generation
+          const { data: order } = await supabase
+            .from("quick_orders")
+            .select("input_data")
+            .eq("id", orderId)
+            .single();
+
+          if (order?.input_data) {
+            try {
+              const genResponse = await fetch(
+                `${process.env.NEXT_PUBLIC_APP_URL}/api/tools/${toolSlug}/generate`,
+                {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ input_data: order.input_data, order_id: orderId }),
+                }
+              );
+
+              if (!genResponse.ok) {
+                console.error("Tool generation failed:", await genResponse.text());
+              }
+            } catch (genErr) {
+              console.error("Tool generation request failed:", genErr);
+            }
+          }
+
+          // Send confirmation email
+          if (session.customer_email) {
+            sendEmail({
+              to: session.customer_email,
+              subject: `Tu ${toolSlug === "huella-verificada" ? "informe está en proceso" : "resultado está listo"} — CIRCULR`,
+              html: `
+                <div style="font-family: Inter, sans-serif; max-width: 600px; margin: 0 auto;">
+                  <h1 style="color: #1A3C34;">Pago confirmado</h1>
+                  <p>Tu pago ha sido procesado correctamente.</p>
+                  ${toolSlug === "huella-verificada"
+                    ? "<p>Un consultor revisará tu informe en las próximas 48 horas.</p>"
+                    : "<p>Tu resultado ya está disponible.</p>"
+                  }
+                  <a href="${process.env.NEXT_PUBLIC_APP_URL}/tools/${toolSlug}?order=${orderId}&status=success"
+                     style="display: inline-block; background: linear-gradient(135deg, #FF6B35, #FF3CAC); color: white; padding: 12px 24px; border-radius: 999px; text-decoration: none; font-weight: 500;">
+                    Ver mi resultado
+                  </a>
+                </div>
+              `,
+            });
+          }
+        }
+        break;
+      }
+
       if (projectId) {
         // Update project status
         await supabase

@@ -14,7 +14,7 @@ export function ProjectMessages({ projectId, currentUserId }: ProjectMessagesPro
   if (loading) {
     return (
       <div className="flex h-64 items-center justify-center">
-        <p className="text-sm text-mid">Cargando mensajes...</p>
+        <p className="text-sm text-stone">Cargando mensajes...</p>
       </div>
     );
   }

@@ -40,17 +40,17 @@ export function MessageThread({ messages, currentUserId, onSend }: MessageThread
             className={cn(
               "max-w-[80%] rounded-lg px-4 py-2",
               msg.sender_id === currentUserId
-                ? "ml-auto bg-lime/20 text-off-white"
-                : "bg-ash text-off-white"
+                ? "ml-auto bg-teal-light text-forest"
+                : "bg-mist text-forest"
             )}
           >
             <p className="text-sm">{msg.content}</p>
-            <p className="mt-1 text-xs text-mid">{formatRelativeTime(msg.created_at)}</p>
+            <p className="mt-1 text-xs text-stone">{formatRelativeTime(msg.created_at)}</p>
           </div>
         ))}
       </div>
 
-      <div className="border-t border-steel/30 p-4">
+      <div className="border-t border-sand p-4">
         <div className="flex gap-2">
           <input
             type="text"
@@ -58,12 +58,12 @@ export function MessageThread({ messages, currentUserId, onSend }: MessageThread
             onChange={(e) => setNewMessage(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && handleSend()}
             placeholder="Escribe un mensaje..."
-            className="flex-1 rounded-lg border border-steel/30 bg-ash px-4 py-2 text-sm text-off-white placeholder:text-mid focus:border-lime focus:outline-none"
+            className="flex-1 rounded-lg border border-sand bg-mist px-4 py-2 text-sm text-forest placeholder:text-stone focus:border-teal focus:outline-none"
           />
           <button
             onClick={handleSend}
             disabled={!newMessage.trim() || sending}
-            className="rounded-lg bg-lime p-2 text-black transition-colors hover:bg-lime-dim disabled:opacity-50"
+            className="rounded-full bg-gradient-primary p-2 text-white transition-colors hover:opacity-90 disabled:opacity-50"
           >
             <Send size={18} />
           </button>

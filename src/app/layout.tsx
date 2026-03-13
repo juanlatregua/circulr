@@ -1,22 +1,22 @@
 import type { Metadata } from "next";
-import { Syne, DM_Sans, DM_Mono } from "next/font/google";
+import { Plus_Jakarta_Sans, Inter, JetBrains_Mono } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
 import { PostHogProvider } from "@/components/providers/PostHogProvider";
 import "./globals.css";
 
-const syne = Syne({
+const plusJakarta = Plus_Jakarta_Sans({
   variable: "--font-display",
   subsets: ["latin"],
   weight: ["700", "800"],
 });
 
-const dmSans = DM_Sans({
+const inter = Inter({
   variable: "--font-body",
   subsets: ["latin"],
   weight: ["300", "400", "500"],
 });
 
-const dmMono = DM_Mono({
+const jetbrainsMono = JetBrains_Mono({
   variable: "--font-mono",
   subsets: ["latin"],
   weight: ["400", "500"],
@@ -37,20 +37,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es" className="dark">
+    <html lang="es">
       <body
-        className={`${syne.variable} ${dmSans.variable} ${dmMono.variable} font-body antialiased bg-black text-off-white`}
+        className={`${plusJakarta.variable} ${inter.variable} ${jetbrainsMono.variable} font-body antialiased bg-background text-foreground`}
       >
         <PostHogProvider>
         {children}
         <Toaster
-          theme="dark"
           position="bottom-right"
           toastOptions={{
             style: {
-              background: "#1C1C1C",
-              border: "1px solid rgba(61, 61, 61, 0.3)",
-              color: "#F5F5F0",
+              background: "#FFFFFF",
+              border: "1px solid #E8E4DC",
+              color: "#1A3C34",
             },
           }}
         />

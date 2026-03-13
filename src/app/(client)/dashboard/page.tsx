@@ -60,15 +60,15 @@ export default function DashboardPage() {
   if (!profile?.onboarded && !loading) {
     return (
       <div className="flex flex-col items-center justify-center py-20">
-        <h1 className="font-display text-2xl font-800 text-off-white">
+        <h1 className="font-display text-2xl font-800 text-forest">
           Bienvenido a CIRCULR
         </h1>
-        <p className="mt-2 text-sm text-pale">
+        <p className="mt-2 text-sm text-mid">
           Completa tu perfil para empezar.
         </p>
         <Link
           href="/dashboard/onboarding"
-          className="mt-6 rounded-lg bg-lime px-6 py-2.5 text-sm font-medium text-black hover:bg-lime-dim"
+          className="mt-6 rounded-full bg-gradient-primary px-6 py-2.5 text-sm font-medium text-white hover:opacity-90"
         >
           Completar onboarding
         </Link>
@@ -78,10 +78,10 @@ export default function DashboardPage() {
 
   return (
     <div>
-      <h1 className="font-display text-2xl font-800 text-off-white">
+      <h1 className="font-display text-2xl font-800 text-forest">
         Dashboard
       </h1>
-      <p className="mt-1 text-sm text-pale">
+      <p className="mt-1 text-sm text-mid">
         {profile?.company_name ? `${profile.company_name} — ` : ""}Gestiona tus proyectos de economía circular.
       </p>
 
@@ -89,13 +89,13 @@ export default function DashboardPage() {
         {stats.map((stat) => (
           <div
             key={stat.label}
-            className="rounded-xl border border-steel/30 bg-smoke p-5"
+            className="rounded-xl border border-sand bg-white p-5"
           >
             <div className="flex items-center gap-3">
-              <stat.icon size={20} className="text-lime" />
-              <span className="text-sm text-pale">{stat.label}</span>
+              <stat.icon size={20} className="text-teal" />
+              <span className="text-sm text-mid">{stat.label}</span>
             </div>
-            <p className="mt-3 font-display text-2xl font-700 text-off-white">
+            <p className="mt-3 font-display text-2xl font-700 text-forest">
               {loading ? "…" : stat.value}
             </p>
           </div>
@@ -106,10 +106,10 @@ export default function DashboardPage() {
       {projects.length > 0 && (
         <div className="mt-8">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="font-display text-lg font-700 text-off-white">
+            <h2 className="font-display text-lg font-700 text-forest">
               Proyectos recientes
             </h2>
-            <Link href="/dashboard/projects" className="flex items-center gap-1 text-sm text-lime hover:underline">
+            <Link href="/dashboard/projects" className="flex items-center gap-1 text-sm text-teal hover:underline">
               Ver todos <ArrowRight size={14} />
             </Link>
           </div>
@@ -118,11 +118,11 @@ export default function DashboardPage() {
               <Link
                 key={project.id}
                 href={`/dashboard/projects/${project.id}`}
-                className="flex items-center justify-between rounded-xl border border-steel/30 bg-smoke p-4 transition-colors hover:border-steel"
+                className="flex items-center justify-between rounded-xl border border-sand bg-white p-4 transition-colors hover:border-sand"
               >
                 <div>
-                  <h3 className="text-sm font-medium text-off-white">{project.title}</h3>
-                  <p className="mt-0.5 text-xs text-mid">{formatRelativeTime(project.created_at)}</p>
+                  <h3 className="text-sm font-medium text-forest">{project.title}</h3>
+                  <p className="mt-0.5 text-xs text-stone">{formatRelativeTime(project.created_at)}</p>
                 </div>
                 <StatusBadge status={project.status} />
               </Link>
@@ -132,16 +132,16 @@ export default function DashboardPage() {
       )}
 
       {projects.length === 0 && !loading && profile?.onboarded && (
-        <div className="mt-8 rounded-xl border border-steel/30 bg-smoke p-6 text-center">
-          <h2 className="font-display text-lg font-700 text-off-white">
+        <div className="mt-8 rounded-xl border border-sand bg-white p-6 text-center">
+          <h2 className="font-display text-lg font-700 text-forest">
             No tienes proyectos todavía
           </h2>
-          <p className="mt-2 text-sm text-pale">
+          <p className="mt-2 text-sm text-mid">
             Solicita tu primer diagnóstico de economía circular.
           </p>
           <Link
             href="/dashboard/onboarding"
-            className="mt-4 inline-block rounded-lg bg-lime px-6 py-2 text-sm font-medium text-black hover:bg-lime-dim"
+            className="mt-4 inline-block rounded-full bg-gradient-primary px-6 py-2 text-sm font-medium text-white hover:opacity-90"
           >
             Nuevo proyecto
           </Link>

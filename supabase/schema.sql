@@ -333,5 +333,52 @@ CREATE POLICY "Admins see all documents"
 CREATE POLICY "Admins see all intakes"
   ON intakes FOR SELECT USING (is_admin());
 
+-- QUICK ORDERS (self-service tools)
+CREATE TYPE quick_order_status AS ENUM ('pending', 'processing', 'consultant_review', 'completed');
+
+CREATE TABLE quick_orders (
+  id                UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  created_at        TIMESTAMPTZ DEFAULT NOW(),
+  email             TEXT NOT NULL,
+  name              TEXT,
+  company           TEXT,
+  product_slug      TEXT NOT NULL,
+  status            quick_order_status DEFAULT 'pending',
+  input_data        JSONB,
+  output_data       JSONB,
+  output_url        TEXT,
+  amount_cents      INTEGER DEFAULT 0,
+  stripe_session_id TEXT,
+  updated_at        TIMESTAMPTZ DEFAULT NOW()
+);
+
+ALTER TABLE quick_orders ENABLE ROW LEVEL SECURITY;
+
+-- Anyone can insert (public form submissions)
+CREATE POLICY "Public can insert quick_orders"
+  ON quick_orders FOR INSERT WITH CHECK (true);
+
+-- Admins and consultants can see all orders
+CREATE POLICY "Admins see all quick_orders"
+  ON quick_orders FOR SELECT USING (is_admin());
+
+CREATE POLICY "Consultants see all quick_orders"
+  ON quick_orders FOR SELECT USING (
+    EXISTS (SELECT 1 FROM profiles WHERE id = auth.uid() AND role = 'consultant')
+  );
+
+-- Admins and consultants can update orders
+CREATE POLICY "Admins update quick_orders"
+  ON quick_orders FOR UPDATE USING (is_admin());
+
+CREATE POLICY "Consultants update quick_orders"
+  ON quick_orders FOR UPDATE USING (
+    EXISTS (SELECT 1 FROM profiles WHERE id = auth.uid() AND role = 'consultant')
+  );
+
+CREATE TRIGGER quick_orders_updated_at
+  BEFORE UPDATE ON quick_orders
+  FOR EACH ROW EXECUTE FUNCTION update_updated_at();
+
 -- ENABLE REALTIME on messages
 ALTER PUBLICATION supabase_realtime ADD TABLE messages;
