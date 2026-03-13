@@ -70,13 +70,26 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Invalid project type" }, { status: 400 });
     }
 
-    // 1. Update profile
+    // Guard: check if user already has a pending_payment project (avoid duplicates)
+    const { data: existingProjects } = await supabase
+      .from("projects")
+      .select("id, status")
+      .eq("client_id", user.id)
+      .in("status", ["pending_payment", "draft"]);
+
+    if (existingProjects && existingProjects.length > 0) {
+      return NextResponse.json(
+        { error: "Ya tienes un proyecto en proceso. Completa el pago pendiente." },
+        { status: 409 }
+      );
+    }
+
+    // 1. Update profile (sector/size now, onboarded AFTER payment via webhook)
     await supabase
       .from("profiles")
       .update({
         sector,
         company_size: employees,
-        onboarded: true,
       })
       .eq("id", user.id);
 

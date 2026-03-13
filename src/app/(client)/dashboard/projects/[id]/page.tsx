@@ -169,7 +169,18 @@ export default function ProjectPage({ params }: ProjectPageProps) {
                           <FileText size={16} className="text-teal" />
                           <span className="text-sm text-forest">{doc.filename}</span>
                         </div>
-                        <button className="text-teal hover:opacity-90">
+                        <button
+                          onClick={async () => {
+                            const supabase = createClient();
+                            const { data } = supabase.storage
+                              .from("documents")
+                              .getPublicUrl(doc.storage_path);
+                            if (data?.publicUrl) {
+                              window.open(data.publicUrl, "_blank");
+                            }
+                          }}
+                          className="text-teal hover:opacity-90"
+                        >
                           <Download size={16} />
                         </button>
                       </div>

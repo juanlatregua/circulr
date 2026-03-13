@@ -41,11 +41,14 @@ function PoliticaMedioambiental() {
       const res = await fetch("/api/tools/politica-medioambiental/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ order_id: oid, input_data: {} }),
+        body: JSON.stringify({ order_id: oid }),
       });
       if (res.ok) {
         const json = await res.json();
         setResult(json.result as { content: string });
+      } else {
+        const errJson = await res.json().catch(() => null);
+        setError(errJson?.error || "Error al generar. Contacta con info@circulr.es");
       }
     } catch {
       setError("Error al generar. Contacta con info@circulr.es");

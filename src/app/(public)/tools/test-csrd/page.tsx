@@ -48,14 +48,18 @@ function TestCsrd() {
   async function generateResults(oid: string) {
     setGenerating(true);
     try {
+      // Call generate — API reads input_data from DB via order_id
       const orderRes = await fetch(`/api/tools/test-csrd/generate`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ order_id: oid, input_data: {} }),
+        body: JSON.stringify({ order_id: oid }),
       });
       if (orderRes.ok) {
         const json = await orderRes.json();
         setResult(json.result as CsrdResult);
+      } else {
+        const errJson = await orderRes.json().catch(() => null);
+        setError(errJson?.error || "Error al generar. Contacta con info@circulr.es");
       }
     } catch {
       setError("Error al generar el resultado. Contacta con info@circulr.es");

@@ -6,6 +6,11 @@ import { TOOL_PRODUCTS, type ToolSlug } from "@/lib/stripe/products";
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 
+// Simple in-memory rate limit for free tool (best-effort on serverless)
+const freeCallTimestamps: number[] = [];
+const FREE_RATE_LIMIT = 30; // max calls per minute
+const FREE_RATE_WINDOW = 60_000;
+
 export async function POST(
   request: NextRequest,
   { params }: { params: Promise<{ slug: string }> }
@@ -17,12 +22,13 @@ export async function POST(
   }
 
   const toolSlug = slug as ToolSlug;
+  const product = TOOL_PRODUCTS[toolSlug];
   const body = await request.json();
-  const { input_data, order_id } = body as { input_data: Record<string, unknown>; order_id?: string };
-
-  if (!input_data) {
-    return NextResponse.json({ error: "Missing input_data" }, { status: 400 });
-  }
+  const { input_data: bodyInputData, order_id, _webhook_secret } = body as {
+    input_data?: Record<string, unknown>;
+    order_id?: string;
+    _webhook_secret?: string;
+  };
 
   const cookieStore = await cookies();
   const supabase = createServerClient(
@@ -35,6 +41,66 @@ export async function POST(
       },
     }
   );
+
+  // Determine input_data source
+  let input_data: Record<string, unknown>;
+
+  if (product.free) {
+    // Free tool: use body input_data directly, apply rate limit
+    if (!bodyInputData || Object.keys(bodyInputData).length === 0) {
+      return NextResponse.json({ error: "Missing input_data" }, { status: 400 });
+    }
+    const now = Date.now();
+    const recent = freeCallTimestamps.filter((t) => now - t < FREE_RATE_WINDOW);
+    freeCallTimestamps.length = 0;
+    freeCallTimestamps.push(...recent);
+    if (recent.length >= FREE_RATE_LIMIT) {
+      return NextResponse.json({ error: "Demasiadas solicitudes. Inténtalo en un minuto." }, { status: 429 });
+    }
+    freeCallTimestamps.push(now);
+    input_data = bodyInputData;
+  } else {
+    // Paid tool: require order_id and verify payment
+    if (!order_id) {
+      return NextResponse.json({ error: "Missing order_id" }, { status: 400 });
+    }
+
+    const { data: order } = await supabase
+      .from("quick_orders")
+      .select("input_data, status, stripe_session_id, output_data")
+      .eq("id", order_id)
+      .single();
+
+    if (!order) {
+      return NextResponse.json({ error: "Order not found" }, { status: 404 });
+    }
+
+    // If already completed, return cached result
+    if (order.status === "completed" && order.output_data) {
+      return NextResponse.json({ result: order.output_data });
+    }
+    if (order.status === "consultant_review" && order.output_data) {
+      return NextResponse.json({ result: order.output_data, status: "consultant_review" });
+    }
+
+    // Verify payment: order must have a stripe_session_id (set during checkout)
+    if (!order.stripe_session_id) {
+      return NextResponse.json({ error: "Payment not completed" }, { status: 402 });
+    }
+
+    // Use input_data from database (the complete data saved during checkout)
+    input_data = (order.input_data as Record<string, unknown>) || {};
+
+    if (Object.keys(input_data).length === 0) {
+      return NextResponse.json({ error: "No input data found for this order" }, { status: 400 });
+    }
+
+    // Mark as processing
+    await supabase
+      .from("quick_orders")
+      .update({ status: "processing" })
+      .eq("id", order_id);
+  }
 
   try {
     let result: unknown;
@@ -98,6 +164,13 @@ export async function POST(
     return NextResponse.json({ result });
   } catch (error) {
     console.error(`Tool generation error [${toolSlug}]:`, error);
+    // Reset order status on failure
+    if (order_id) {
+      await supabase
+        .from("quick_orders")
+        .update({ status: "pending" })
+        .eq("id", order_id);
+    }
     return NextResponse.json({ error: "Generation failed" }, { status: 500 });
   }
 }

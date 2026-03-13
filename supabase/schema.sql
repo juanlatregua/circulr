@@ -288,9 +288,9 @@ CREATE POLICY "Participants can update messages"
 CREATE POLICY "Clients see own invoices"
   ON invoices FOR SELECT USING (auth.uid() = client_id);
 
--- Invoices: service role can insert (via webhook)
-CREATE POLICY "Service role can insert invoices"
-  ON invoices FOR INSERT WITH CHECK (true);
+-- Invoices: only admins can insert (webhook uses service role which bypasses RLS)
+CREATE POLICY "Admins can insert invoices"
+  ON invoices FOR INSERT WITH CHECK (is_admin());
 
 -- ADMIN POLICIES
 -- Helper: check if current user is admin
