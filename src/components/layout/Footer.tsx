@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export function Footer() {
   return (
@@ -6,8 +7,8 @@ export function Footer() {
       <div className="mx-auto max-w-7xl px-6 py-12">
         <div className="grid gap-8 md:grid-cols-4">
           <div>
-            <h3 className="font-display text-lg font-800 text-off-white">CIRCULR</h3>
-            <p className="mt-2 text-sm text-pale">
+            <Image src="/logo.svg" alt="CIRCULR" width={160} height={36} className="h-9 w-auto" />
+            <p className="mt-3 text-sm text-pale">
               Consultoría de economía circular para empresas europeas.
             </p>
           </div>

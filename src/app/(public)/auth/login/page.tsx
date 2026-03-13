@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { createClient } from "@/lib/supabase/client";
 
 export default function LoginPage() {
@@ -46,11 +47,14 @@ export default function LoginPage() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-black px-4">
       <div className="w-full max-w-sm">
+        <Link href="/" className="mb-8 block">
+          <Image src="/logo.svg" alt="CIRCULR" width={180} height={40} className="h-9 w-auto" />
+        </Link>
         <h1 className="font-display text-3xl font-800 text-off-white">
           Iniciar sesión
         </h1>
         <p className="mt-2 text-sm text-pale">
-          Accede a tu cuenta CIRCULR
+          Accede a tu cuenta
         </p>
 
         <form onSubmit={handleLogin} className="mt-8 space-y-4">

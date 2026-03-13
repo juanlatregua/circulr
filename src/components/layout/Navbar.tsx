@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Menu, X, LogOut, User } from "lucide-react";
 import { useState } from "react";
@@ -26,8 +27,8 @@ export function Navbar({ variant = "public" }: NavbarProps) {
     return (
       <nav className="fixed top-0 left-0 right-0 z-50 border-b border-steel/30 bg-black/80 backdrop-blur-md">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
-          <Link href="/" className="font-display text-xl font-800 tracking-tight text-off-white">
-            CIRCULR
+          <Link href="/" className="flex items-center">
+            <Image src="/logo.svg" alt="CIRCULR" width={180} height={40} priority className="h-8 w-auto" />
           </Link>
 
           <div className="hidden items-center gap-8 md:flex">
@@ -110,8 +111,9 @@ function AppNavbar() {
   return (
     <nav className="sticky top-0 z-40 border-b border-steel/30 bg-smoke/80 backdrop-blur-md">
       <div className="flex h-14 items-center justify-between px-6">
-        <Link href={dashboardHref} className="font-display text-lg font-800 tracking-tight text-off-white">
-          CIRCULR
+        <Link href={dashboardHref} className="flex items-center">
+          <Image src="/logo-icon.svg" alt="CIRCULR" width={36} height={36} className="h-8 w-8" />
+          <span className="ml-2 font-display text-lg font-800 tracking-tight text-off-white hidden sm:block">CIRCULR</span>
         </Link>
 
         {user && (

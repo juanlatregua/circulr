@@ -23,9 +23,12 @@ const dmMono = DM_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "CIRCULR — Circular Economy Consulting Platform",
+  title: "CIRCULR — Close the loop. Open the revenue.",
   description:
-    "B2B SaaS platform connecting businesses with circular economy consultants. CSRD compliance, CE diagnostics, and implementation support.",
+    "Consultoría de economía circular potenciada por IA. Cumplimiento CSRD, diagnósticos CE y planes de implementación para PYMEs europeas.",
+  icons: {
+    icon: "/logo-icon.svg",
+  },
 };
 
 export default function RootLayout({

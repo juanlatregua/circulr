@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import {
   LayoutDashboard,
@@ -111,7 +112,7 @@ export function Sidebar({ role }: SidebarProps) {
           <SheetContent side="left" className="w-60 bg-smoke border-steel/30 p-0">
             <div className="flex h-full flex-col" onClick={() => setOpen(false)}>
               <div className="px-4 py-3 border-b border-steel/30">
-                <span className="font-display text-lg font-800 text-off-white">CIRCULR</span>
+                <Image src="/logo.svg" alt="CIRCULR" width={140} height={32} className="h-7 w-auto" />
               </div>
               <SidebarNav links={links} pathname={pathname} settingsHref={settingsHref} />
             </div>

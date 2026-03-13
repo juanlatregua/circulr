@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { createClient } from "@/lib/supabase/client";
 
 export default function RegisterPage() {
@@ -68,11 +69,14 @@ export default function RegisterPage() {
         </div>
 
         <div id="register-form">
+          <Link href="/" className="mb-8 block">
+            <Image src="/logo.svg" alt="CIRCULR" width={180} height={40} className="h-9 w-auto" />
+          </Link>
           <h1 className="font-display text-3xl font-800 text-off-white">
             Crear cuenta
           </h1>
           <p className="mt-2 text-sm text-pale">
-            Empieza tu transición circular con CIRCULR
+            Empieza tu transición circular
           </p>
 
           <form onSubmit={handleRegister} className="mt-8 space-y-4">
