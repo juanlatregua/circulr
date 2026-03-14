@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { ToolCard } from "@/components/tools/ToolCard";
@@ -71,6 +72,7 @@ const services = [
     price: "1.500",
     timeline: "5 días",
     description: "Mapa completo de tu circularidad en 5 días",
+    image: "/images/foto17.png",
     features: [
       "Análisis de flujos de materiales",
       "Evaluación de madurez circular",
@@ -85,6 +87,7 @@ const services = [
     price: "2.500",
     timeline: "10 días",
     description: "Cuestionario respondido y verificado en 10 días",
+    image: "/images/foto54.png",
     features: [
       "Análisis de gaps ESRS completo",
       "Plan de acción priorizado",
@@ -99,6 +102,7 @@ const services = [
     price: "5.000",
     timeline: "3 meses",
     description: "Plan completo de 12 meses con acompañamiento",
+    image: "/images/foto49.png",
     features: [
       "Plan de implementación detallado",
       "Seguimiento mensual",
@@ -112,7 +116,7 @@ const services = [
 
 const team = [
   {
-    name: "Isabelle Monnier",
+    name: "Isabelle Guitton",
     role: "Economía Circular",
     icon: Leaf,
     bio: "Master VIU 2024. Especialista ESRS E5. 15+ años en consultoría de sostenibilidad y economía circular para empresas europeas.",
@@ -138,17 +142,25 @@ export default function LandingPage() {
 
       {/* HERO */}
       <section className="relative flex min-h-screen items-center pt-16 overflow-hidden">
-        {/* Gradient blobs */}
-        <div className="pointer-events-none absolute top-20 right-0 h-[500px] w-[500px] rounded-full bg-coral/8 blur-3xl" />
-        <div className="pointer-events-none absolute bottom-20 left-0 h-[400px] w-[400px] rounded-full bg-teal/8 blur-3xl" />
+        <Image
+          src="/images/foto22.png"
+          alt="Girasoles y aerogeneradores en España"
+          fill
+          priority
+          className="object-cover"
+        />
+        <div
+          className="absolute inset-0"
+          style={{ backgroundColor: "rgba(10, 30, 15, 0.65)" }}
+        />
 
         <div className="relative mx-auto max-w-7xl px-6">
           <div className="max-w-3xl">
-            <h1 className="font-display text-4xl font-800 leading-[1.1] tracking-tight text-forest md:text-6xl lg:text-7xl">
+            <h1 className="font-display text-4xl font-800 leading-[1.1] tracking-tight text-white md:text-6xl lg:text-7xl">
               Tu cliente grande acaba de mandarte un cuestionario CSRD.{" "}
               <span className="gradient-primary-text">Tienes 10 días.</span>
             </h1>
-            <p className="mt-6 max-w-xl text-lg text-mid leading-relaxed">
+            <p className="mt-6 max-w-xl text-lg text-white/85 leading-relaxed">
               CIRCULR lo resuelve por ti. Precio fijo. Plazo garantizado.
               Sin consultoras caras.
             </p>
@@ -162,7 +174,7 @@ export default function LandingPage() {
               </Link>
               <Link
                 href="#como-funciona"
-                className="inline-flex items-center justify-center gap-2 rounded-full border border-sand px-7 py-3.5 text-sm font-medium text-forest transition-colors hover:bg-mist"
+                className="inline-flex items-center justify-center gap-2 rounded-full border border-white/30 px-7 py-3.5 text-sm font-medium text-white transition-colors hover:bg-white/10"
               >
                 Ver cómo funciona
               </Link>
@@ -174,36 +186,55 @@ export default function LandingPage() {
       {/* PROBLEMA */}
       <section className="py-24">
         <div className="mx-auto max-w-7xl px-6">
-          <h2 className="text-center font-display text-3xl font-800 text-forest md:text-4xl">
-            ¿Te suena?
-          </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-center text-mid">
-            Tres situaciones que vemos todos los días.
-          </p>
-          <div className="mt-16 grid gap-6 md:grid-cols-3">
-            {painPoints.map((pain) => (
-              <div
-                key={pain.title}
-                className="rounded-2xl border border-sand bg-white p-6 shadow-sm transition-shadow hover:shadow-md"
-              >
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-coral-soft">
-                  <pain.icon size={20} className="text-coral" />
-                </div>
-                <h3 className="mt-4 font-display text-lg font-700 text-forest">
-                  {pain.title}
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-mid">
-                  {pain.description}
-                </p>
+          <div className="flex flex-col gap-12 md:flex-row md:items-start">
+            <div className="md:w-[55%]">
+              <h2 className="font-display text-3xl font-800 text-forest md:text-4xl">
+                ¿Te suena?
+              </h2>
+              <p className="mt-4 max-w-2xl text-mid">
+                Tres situaciones que vemos todos los días.
+              </p>
+              <div className="mt-12 grid gap-6">
+                {painPoints.map((pain) => (
+                  <div
+                    key={pain.title}
+                    className="rounded-2xl border border-sand bg-white p-6 shadow-sm transition-shadow hover:shadow-md"
+                  >
+                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-coral-soft">
+                      <pain.icon size={20} className="text-coral" />
+                    </div>
+                    <h3 className="mt-4 font-display text-lg font-700 text-forest">
+                      {pain.title}
+                    </h3>
+                    <p className="mt-2 text-sm leading-relaxed text-mid">
+                      {pain.description}
+                    </p>
+                  </div>
+                ))}
               </div>
-            ))}
+            </div>
+            <div className="relative hidden h-[300px] w-[45%] overflow-hidden rounded-xl md:block">
+              <Image
+                src="/images/foto65.jpg"
+                alt="Reunión de negocios con apretón de manos"
+                fill
+                className="object-cover"
+              />
+            </div>
           </div>
         </div>
       </section>
 
       {/* CÓMO FUNCIONA */}
-      <section id="como-funciona" className="bg-mist py-24">
-        <div className="mx-auto max-w-7xl px-6">
+      <section id="como-funciona" className="relative py-24 overflow-hidden">
+        <Image
+          src="/images/foto63.png"
+          alt="Reunión de consultoría moderna"
+          fill
+          className="object-cover"
+        />
+        <div className="absolute inset-0 bg-mist/80" />
+        <div className="relative mx-auto max-w-7xl px-6">
           <h2 className="text-center font-display text-3xl font-800 text-forest md:text-4xl">
             Cómo funciona
           </h2>
@@ -244,49 +275,59 @@ export default function LandingPage() {
             {services.map((service) => (
               <div
                 key={service.name}
-                className={`flex flex-col rounded-2xl border p-6 shadow-sm ${
+                className={`flex flex-col overflow-hidden rounded-2xl border shadow-sm ${
                   service.highlighted
                     ? "border-coral/30 bg-white ring-2 ring-coral/20"
                     : "border-sand bg-white"
                 }`}
               >
-                {service.highlighted && (
-                  <span className="mb-4 inline-flex w-fit rounded-full gradient-primary px-3 py-1 text-xs font-medium text-white">
-                    Más popular
-                  </span>
-                )}
-                <h3 className="font-display text-xl font-700 text-forest">
-                  {service.name}
-                </h3>
-                <p className="mt-1 text-sm text-mid">{service.description}</p>
-                <div className="mt-4 flex items-baseline gap-1">
-                  <span className="font-display text-4xl font-800 text-forest">
-                    {service.price}
-                  </span>
-                  <span className="text-sm text-mid">&euro;</span>
+                <div className="relative h-[180px] w-full">
+                  <Image
+                    src={service.image}
+                    alt={service.name}
+                    fill
+                    className="object-cover"
+                  />
                 </div>
-                <span className="mt-1 text-xs text-teal font-medium">{service.timeline}</span>
-                <ul className="mt-6 flex-1 space-y-3">
-                  {service.features.map((feature) => (
-                    <li key={feature} className="flex items-start gap-2">
-                      <CheckCircle2
-                        size={16}
-                        className="mt-0.5 shrink-0 text-teal"
-                      />
-                      <span className="text-sm text-mid">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-                <Link
-                  href="/auth/register"
-                  className={`mt-6 rounded-full px-4 py-2.5 text-center text-sm font-medium transition-all ${
-                    service.highlighted
-                      ? "gradient-primary text-white hover:opacity-90 shadow-sm"
-                      : "border border-sand text-forest hover:bg-mist"
-                  }`}
-                >
-                  {service.cta}
-                </Link>
+                <div className="flex flex-1 flex-col p-6">
+                  {service.highlighted && (
+                    <span className="mb-4 inline-flex w-fit rounded-full gradient-primary px-3 py-1 text-xs font-medium text-white">
+                      Más popular
+                    </span>
+                  )}
+                  <h3 className="font-display text-xl font-700 text-forest">
+                    {service.name}
+                  </h3>
+                  <p className="mt-1 text-sm text-mid">{service.description}</p>
+                  <div className="mt-4 flex items-baseline gap-1">
+                    <span className="font-display text-4xl font-800 text-forest">
+                      {service.price}
+                    </span>
+                    <span className="text-sm text-mid">&euro;</span>
+                  </div>
+                  <span className="mt-1 text-xs text-teal font-medium">{service.timeline}</span>
+                  <ul className="mt-6 flex-1 space-y-3">
+                    {service.features.map((feature) => (
+                      <li key={feature} className="flex items-start gap-2">
+                        <CheckCircle2
+                          size={16}
+                          className="mt-0.5 shrink-0 text-teal"
+                        />
+                        <span className="text-sm text-mid">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <Link
+                    href="/auth/register"
+                    className={`mt-6 rounded-full px-4 py-2.5 text-center text-sm font-medium transition-all ${
+                      service.highlighted
+                        ? "gradient-primary text-white hover:opacity-90 shadow-sm"
+                        : "border border-sand text-forest hover:bg-mist"
+                    }`}
+                  >
+                    {service.cta}
+                  </Link>
+                </div>
               </div>
             ))}
           </div>
@@ -332,8 +373,18 @@ export default function LandingPage() {
       </section>
 
       {/* EQUIPO */}
-      <section id="equipo" className="bg-mist py-24">
-        <div className="mx-auto max-w-7xl px-6">
+      <section id="equipo" className="relative py-24 overflow-hidden">
+        <Image
+          src="/images/foto63.png"
+          alt="Reunión de equipo"
+          fill
+          className="hidden object-cover md:block"
+        />
+        <div
+          className="absolute inset-0 hidden md:block"
+          style={{ backgroundColor: "rgba(240, 247, 244, 0.92)" }}
+        />
+        <div className="relative mx-auto max-w-7xl px-6">
           <h2 className="text-center font-display text-3xl font-800 text-forest md:text-4xl">
             Quién está detrás
           </h2>
@@ -363,12 +414,22 @@ export default function LandingPage() {
       </section>
 
       {/* CTA FINAL */}
-      <section className="py-24">
-        <div className="mx-auto max-w-2xl px-6 text-center">
-          <h2 className="font-display text-3xl font-800 text-forest md:text-4xl">
+      <section className="relative min-h-[300px] overflow-hidden py-24">
+        <Image
+          src="/images/foto31.png"
+          alt="Planta termosolar"
+          fill
+          className="object-cover"
+        />
+        <div
+          className="absolute inset-0"
+          style={{ backgroundColor: "rgba(13, 61, 42, 0.75)" }}
+        />
+        <div className="relative mx-auto max-w-2xl px-6 text-center">
+          <h2 className="font-display text-3xl font-800 text-white md:text-4xl">
             ¿Tienes un cuestionario CSRD encima de la mesa?
           </h2>
-          <p className="mt-4 text-mid">
+          <p className="mt-4 text-white/85">
             No dejes que un plazo te paralice. Nosotros lo resolvemos por ti —
             con precio fijo, plazo garantizado y entregable profesional.
           </p>
@@ -381,7 +442,7 @@ export default function LandingPage() {
               <ArrowRight size={18} />
             </Link>
           </div>
-          <p className="mt-4 text-xs text-stone">
+          <p className="mt-4 text-xs text-white/60">
             Sin compromiso. Respondemos en menos de 24h.
           </p>
         </div>

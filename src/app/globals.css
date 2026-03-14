@@ -65,6 +65,8 @@
   --color-coral-soft: var(--coral-soft);
   --color-danger: var(--danger);
   --color-danger-soft: var(--danger-soft);
+  --color-forest-accent: var(--forest-accent);
+  --color-forest-accent-dark: var(--forest-accent-dark);
 
   /* CIRCULR font tokens */
   --font-display: var(--font-display);

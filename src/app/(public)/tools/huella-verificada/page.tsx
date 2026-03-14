@@ -55,7 +55,7 @@ function HuellaVerificada() {
               </div>
               <h1 className="mt-4 font-display text-2xl font-800 text-forest">Pedido confirmado</h1>
               <p className="mt-3 text-sm text-mid">
-                Hemos recibido tu pedido y tus datos. Nuestra consultora Isabelle Monnier
+                Hemos recibido tu pedido y tus datos. Nuestra consultora Isabelle Guitton
                 revisará tu informe en las próximas <strong className="text-forest">48 horas</strong>.
               </p>
               <div className="mt-6 flex items-center justify-center gap-2 rounded-xl bg-mist p-4">

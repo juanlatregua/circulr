@@ -2,6 +2,29 @@
 -- CIRCULR Database Schema
 -- ================================================
 
+-- Drop existing types if they exist
+DROP TYPE IF EXISTS user_role CASCADE;
+DROP TYPE IF EXISTS project_type CASCADE;
+DROP TYPE IF EXISTS project_status CASCADE;
+DROP TYPE IF EXISTS urgency_level CASCADE;
+DROP TYPE IF EXISTS doc_type CASCADE;
+DROP TYPE IF EXISTS gen_status CASCADE;
+DROP TYPE IF EXISTS invoice_status CASCADE;
+DROP TYPE IF EXISTS ce_maturity CASCADE;
+DROP TYPE IF EXISTS quick_order_status CASCADE;
+
+-- Drop existing tables if they exist (preserves auth.users)
+DROP TABLE IF EXISTS audit_log CASCADE;
+DROP TABLE IF EXISTS webhook_events CASCADE;
+DROP TABLE IF EXISTS invoices CASCADE;
+DROP TABLE IF EXISTS messages CASCADE;
+DROP TABLE IF EXISTS ai_generations CASCADE;
+DROP TABLE IF EXISTS documents CASCADE;
+DROP TABLE IF EXISTS quick_orders CASCADE;
+DROP TABLE IF EXISTS intakes CASCADE;
+DROP TABLE IF EXISTS projects CASCADE;
+DROP TABLE IF EXISTS profiles CASCADE;
+
 -- ENUM TYPES
 CREATE TYPE user_role AS ENUM ('client', 'consultant', 'admin');
 CREATE TYPE project_type AS ENUM ('csrd_response', 'ce_diagnosis', 'implementation', 'training');

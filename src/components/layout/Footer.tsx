@@ -16,19 +16,19 @@ export function Footer() {
           <div>
             <h4 className="text-sm font-medium text-white">Servicios</h4>
             <ul className="mt-3 space-y-2">
-              <li><Link href="#" className="text-sm text-sage hover:text-white transition-colors">Respuesta CSRD</Link></li>
-              <li><Link href="#" className="text-sm text-sage hover:text-white transition-colors">Diagnóstico CE</Link></li>
-              <li><Link href="#" className="text-sm text-sage hover:text-white transition-colors">Implementación</Link></li>
-              <li><Link href="#" className="text-sm text-sage hover:text-white transition-colors">Formación</Link></li>
+              <li><Link href="/#servicios" className="text-sm text-sage hover:text-white transition-colors">Respuesta CSRD</Link></li>
+              <li><Link href="/#servicios" className="text-sm text-sage hover:text-white transition-colors">Diagnóstico CE</Link></li>
+              <li><Link href="/#servicios" className="text-sm text-sage hover:text-white transition-colors">Implementación</Link></li>
+              <li><Link href="/#servicios" className="text-sm text-sage hover:text-white transition-colors">Formación</Link></li>
             </ul>
           </div>
 
           <div>
             <h4 className="text-sm font-medium text-white">Legal</h4>
             <ul className="mt-3 space-y-2">
-              <li><Link href="#" className="text-sm text-sage hover:text-white transition-colors">Privacidad</Link></li>
-              <li><Link href="#" className="text-sm text-sage hover:text-white transition-colors">Términos</Link></li>
-              <li><Link href="#" className="text-sm text-sage hover:text-white transition-colors">Cookies</Link></li>
+              <li><Link href="/legal/privacidad" className="text-sm text-sage hover:text-white transition-colors">Privacidad</Link></li>
+              <li><Link href="/legal/terminos" className="text-sm text-sage hover:text-white transition-colors">Términos</Link></li>
+              <li><Link href="/legal/cookies" className="text-sm text-sage hover:text-white transition-colors">Cookies</Link></li>
             </ul>
           </div>
 
@@ -36,7 +36,7 @@ export function Footer() {
             <h4 className="text-sm font-medium text-white">Contacto</h4>
             <ul className="mt-3 space-y-2">
               <li><span className="text-sm text-sage">info@circulr.es</span></li>
-              <li><span className="text-sm text-sage">Barcelona, España</span></li>
+              <li><span className="text-sm text-sage">Málaga, España</span></li>
             </ul>
           </div>
         </div>

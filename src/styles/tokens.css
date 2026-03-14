@@ -15,6 +15,10 @@
   --pink:        #FF3CAC;
   --violet:      #7B2FFF;
 
+  /* Accent */
+  --forest-accent: #1A7A5C;
+  --forest-accent-dark: #145E47;
+
   /* Secondary */
   --teal:        #00C9A7;
   --teal-light:  #E6FAF5;

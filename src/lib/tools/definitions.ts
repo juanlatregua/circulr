@@ -162,7 +162,7 @@ export const TOOL_DEFINITIONS: Record<string, ToolDefinition> = {
         fields: [
           { name: "company_name", label: "Razón social", type: "text", required: true, placeholder: "Empresa S.L." },
           { name: "cif", label: "CIF", type: "text", required: true, placeholder: "B12345678" },
-          { name: "address", label: "Dirección", type: "text", required: true, placeholder: "Calle Example, 1, Barcelona" },
+          { name: "address", label: "Dirección", type: "text", required: true, placeholder: "Calle Example, 1, Málaga" },
           { name: "sector", label: "Sector", type: "select", required: true, options: sectorOptions },
           { name: "employees", label: "Empleados", type: "select", required: true, options: employeeOptions },
         ],
@@ -229,7 +229,7 @@ export const TOOL_DEFINITIONS: Record<string, ToolDefinition> = {
         fields: [
           { name: "company_name", label: "Razón social", type: "text", required: true, placeholder: "Empresa S.L." },
           { name: "cif", label: "CIF", type: "text", required: true, placeholder: "B12345678" },
-          { name: "address", label: "Dirección", type: "text", required: true, placeholder: "Calle Example, 1, Barcelona" },
+          { name: "address", label: "Dirección", type: "text", required: true, placeholder: "Calle Example, 1, Málaga" },
           { name: "sector", label: "Sector", type: "select", required: true, options: sectorOptions },
           { name: "employees", label: "Empleados", type: "select", required: true, options: employeeOptions },
           { name: "year", label: "Año de reporte", type: "number", required: true, placeholder: "2025", min: 2020 },
