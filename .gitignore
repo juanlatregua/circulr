@@ -44,3 +44,5 @@ _docs/
 *.tsbuildinfo
 next-env.d.ts
 .env*.local
+public/images 2.zip
+supabase/.temp/
