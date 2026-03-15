@@ -44,6 +44,9 @@ export function Navbar({ variant = "public" }: NavbarProps) {
             <Link href="/tools" className="text-sm text-mid transition-colors hover:text-forest">
               Herramientas
             </Link>
+            <Link href="/blog" className="text-sm text-mid transition-colors hover:text-forest">
+              Blog
+            </Link>
             <Link
               href="/auth/register"
               className="gradient-primary rounded-full px-5 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
@@ -75,6 +78,9 @@ export function Navbar({ variant = "public" }: NavbarProps) {
               </Link>
               <Link href="/tools" className="text-sm text-mid" onClick={() => setMobileOpen(false)}>
                 Herramientas
+              </Link>
+              <Link href="/blog" className="text-sm text-mid" onClick={() => setMobileOpen(false)}>
+                Blog
               </Link>
               <Link
                 href="/auth/register"

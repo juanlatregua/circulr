@@ -13,6 +13,7 @@ import {
   Menu,
   Users,
   Wrench,
+  Presentation,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -41,6 +42,7 @@ const consultantLinks: SidebarLink[] = [
   { href: "/consultant/messages", label: "Mensajes", icon: <MessageSquare size={18} /> },
   { href: "/consultant/analytics", label: "Analytics", icon: <BarChart3 size={18} /> },
   { href: "/consultant/tools", label: "Herramientas", icon: <Wrench size={18} /> },
+  { href: "/consultant/presentations", label: "Presentaciones", icon: <Presentation size={18} /> },
 ];
 
 const adminLinks: SidebarLink[] = [
