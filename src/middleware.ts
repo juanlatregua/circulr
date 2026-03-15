@@ -48,7 +48,9 @@ export async function middleware(request: NextRequest) {
     pathname === "/" ||
     pathname.startsWith("/auth") ||
     pathname.startsWith("/api") ||
-    pathname.startsWith("/tools")
+    pathname.startsWith("/tools") ||
+    pathname.startsWith("/blog") ||
+    pathname.startsWith("/legal")
   ) {
     return supabaseResponse;
   }
